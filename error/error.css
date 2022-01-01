@@ -1,0 +1,19 @@
+h1 {
+    color: aliceblue;
+    margin-left: 80px;
+    margin-top: 50px;
+}
+
+p {
+    color: aliceblue;
+    margin-left: 80px;
+    margin-top: 20px;
+}
+
+body {
+    background-image: url('/error/preview1.png');
+    
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
