@@ -25,10 +25,14 @@ db.collection('jsonDB').find({
 
 })
 
-db.collection('paths').findOne({}, (error,task) => {
-        if (error) throw error;
-        console.log(task.path)
-    })
+db.collection('paths').find({path: "/client/screen.html"}).toArray((error,tasks) => {
+    console.log(tasks)
+})
+
+// db.collection('paths').findOne({}, (error,task) => {
+//         if (error) throw error;
+//         console.log(task.path)
+//     })
 });
 exports.MongoClient = MongoClient;
 
