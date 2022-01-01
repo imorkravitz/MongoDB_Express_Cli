@@ -3,7 +3,7 @@ const db = require('./mongoData');
 const MongoClient = mongodb.MongoClient;
 const connectionURL = 'mongodb://localhost:27017/mydb'
 const dataBaseName = 'mydb';
-const jsonArr = require('../client/jsonData.json')
+const jsonArr = require('../client/jsonData.json');
 
 MongoClient.connect(connectionURL, {
     useUnifiedTopology: true,
@@ -12,7 +12,7 @@ MongoClient.connect(connectionURL, {
     if (err) {
         return console.log('Cant connect to db');
     }
-    console.log('passint the data to Mongo')
+    console.log('passing the data to Mongo')
     const db = data.db(dataBaseName);
 
 db.collection('jsonDB').insertMany(jsonArr,(err,result) => {
@@ -21,14 +21,14 @@ db.collection('jsonDB').insertMany(jsonArr,(err,result) => {
         }
         console.log(result.acknowledged)
     })
+db.collection('jsonDB').find({
 
-db.collection('paths').findOne({
-    }, (error,task) => {
-        // console.log(task.path)
-        if(error) {
-            return console.log('error');
-        }
-    })   
+})
+
+db.collection('paths').findOne({}, (error,task) => {
+        if (error) throw error;
+        console.log(task.path)
+    })
 });
 exports.MongoClient = MongoClient;
 

@@ -107,6 +107,5 @@ function getJson() {
             }
         }
     ]
-    module.exports = jsonArr;
     return jsonArr;
 }
