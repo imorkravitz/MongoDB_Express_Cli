@@ -1,4 +1,3 @@
-var showTime=2000;
 function getJson() {
     var jsonArr = [{
             "name": "No Time To Die (2021)",
@@ -13,15 +12,7 @@ function getJson() {
                 "img1": "../client/images/jamesbond2.png",
             },
             "template": "../client/templates/templateA.html",
-            "showtime": showTime,
-            "timeblock": {
-                "startDate": "12-16-2021",
-                "stopDate": "12-31-2021",
-                "days": [1, 1, 1, 1, 1, 1, 1],
-                "hours": [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0]
-            }
         },
-
         {
             "name": "Sing 2",
             "texts": {
@@ -40,13 +31,6 @@ function getJson() {
                 "img0": "../client/images/sing.png",
             },
             "template": "../client/templates/templateB.html",
-            "showtime": showTime,
-            "timeblock": {
-                "startDate": "12-16-2021",
-                "stopDate": "12-31-2021",
-                "days": [0, 1, 0, 1, 0, 0, 0],
-                "hours": [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0]
-            }
         },
 
         {
@@ -56,13 +40,6 @@ function getJson() {
                 "img0": "../client/images/jol.jpeg",
             },
             "template": "../client/templates/templateC.html",
-            "showtime": showTime,
-            "timeblock": {
-                "startDate": "05-01-2021",
-                "stopDate": "06-15-2021",
-                "days": [1, 1, 1, 1, 1, 1, 1],
-                "hours": [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0]
-            }
         },
         {
             "name": "Spider-Man: No Way Home",
@@ -73,14 +50,6 @@ function getJson() {
             "images": {
                 "img0": "../client/images/spiderman.jpeg",
             },
-            "template": "../client/templates/templateA.html",
-            "showtime": showTime,
-            "timeblock": {
-                "startDate": "03-29-2021",
-                "stopDate": "04-15-2021",
-                "days": [0, 1, 0, 0, 0, 0, 0],
-                "hours": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0]
-            }
         },
         {
             "name": "Hawkeye",
@@ -98,13 +67,6 @@ function getJson() {
                 "img1": "../client/images/Hawkeye2.png",
             },
             "template": "../client/templates/templateB.html",
-            "showtime": showTime,
-            "timeblock": {
-                "startDate": "04-1-2021",
-                "stopDate": "04-30-2021",
-                "days": [0, 1, 1, 1, 0, 0, 0],
-                "hours": [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0]
-            }
         }
     ]
     return jsonArr;
