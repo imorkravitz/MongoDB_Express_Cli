@@ -1,14 +1,33 @@
+//Server setup
 const express = require('express');
-const path = require('path');
-
 const app = express();
+const port = process.env.PORT || "8080";
+
+const path = require('path');
+const http = require('http');
+
+const server = http.createServer(app);
+const io = require('socket.io')(server);
+
+server.listen(port,() => console.log(`server is listening on port ${port}`));
+
+
 const db = require("./db/mongoConnect");
 const {PathModel} = require("./models/PathModel");
 
-// app.use(express.json()); 
+
+//Static files
 app.use('/client', express.static(path.join(__dirname, 'client')));
 app.use('/error', express.static(path.join(__dirname, 'error')));
 
+//Socket setup
+// var socket = io.connect('http://localhost:8080/');
+
+// socket.on('connect', function(socket){
+//     console.log("made socket connection", socket.id);
+// });
+
+var userName = {};
 
 var countOfScreen = 3;
 app.get('/screen=:num', async (req, res) => {
@@ -25,5 +44,3 @@ app.get('/screen=:num', async (req, res) => {
     }
 })
 
-const port = process.env.PORT || "8080";
-app.listen(port, () => console.log(`server is listening on port ${port}`));
