@@ -7,17 +7,14 @@ $(document).ready(function () {
 
 function loadTemplates() {
     id = getScreen();
-    if(i==0){
-        console.log("screen id: "+ id);
+    if (i == 0) {
+        console.log("screen id: " + id);
     }
-    var temp = scheduler[id-1];
+    var temp = scheduler[id - 1];
     var num = i % Object.keys(temp.advertising).length;
-    var post = json[temp.advertising[num]]; 
-    console.log( "Iteration: "+num);
-    console.log( "advertisement: "+temp.advertising[num]);
-    
-    {
-
+    var post = json[temp.advertising[num]];
+    console.log("Iteration: " + num);
+    console.log("advertisement: " + temp.advertising[num]); {
         $('#main_page').load(post.template, function () {
             $('#name').text(post.name);
 
@@ -34,8 +31,8 @@ function loadTemplates() {
     i++;
 }
 
-function getScreen(){
+function getScreen() {
     var url = window.location.pathname;
-    var arr = url.split('='); 
+    var arr = url.split('=');
     return arr[1];
 }

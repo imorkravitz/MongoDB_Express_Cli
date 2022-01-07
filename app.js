@@ -5,21 +5,22 @@ const port = process.env.PORT || "8080";
 
 const path = require('path');
 const http = require('http');
+app.use(express.json());
 
 const server = http.createServer(app);
 const io = require('socket.io')(server);
 
 server.listen(port,() => console.log(`server is listening on port ${port}`));
 
-
+//MongoConnection
 const db = require("./db/mongoConnect");
-const {PathModel} = require("./models/PathModel");
-
+const {PathModel} = require("./models/PathModel"); // in order to include the schema
 
 //Static files
-app.use('/client', express.static(path.join(__dirname, 'client')));
-app.use('/error', express.static(path.join(__dirname, 'error')));
 
+app.use('/client', express.static(path.join(__dirname, 'client')));
+app.use('/connections', express.static(path.join(__dirname, 'connections')));
+app.use('/error', express.static(path.join(__dirname, 'error')));
 //Socket setup
 // var socket = io.connect('http://localhost:8080/');
 
@@ -27,7 +28,6 @@ app.use('/error', express.static(path.join(__dirname, 'error')));
 //     console.log("made socket connection", socket.id);
 // });
 
-var userName = {};
 
 var countOfScreen = 3;
 app.get('/screen=:num', async (req, res) => {
@@ -36,11 +36,10 @@ app.get('/screen=:num', async (req, res) => {
     console.log(data);
     console.log(data[0]._doc.path);
 
-
     if(num>0 && num<=countOfScreen){
         res.sendFile(path.join(__dirname, data[0]._doc.path));
     }else{
         res.sendFile(path.join(__dirname, data[1]._doc.path));
     }
-})
+});
 
