@@ -1,16 +1,14 @@
 //Server setup
 const express = require('express');
 const app = express();
+const http = require('http').Server(app);
 const port = process.env.PORT || "8080";
-
+const io = require('socket.io')(http, { cors: {}});
 const path = require('path');
-const http = require('http');
-app.use(express.json());
+// app.use(express.json());
 
-const server = http.createServer(app);
-const io = require('socket.io')(server);
 
-server.listen(port,() => console.log(`server is listening on port ${port}`));
+http.listen(port,() => console.log(`server is listening on port ${port}`));
 
 //MongoConnection
 const db = require("./db/mongoConnect");
@@ -19,15 +17,12 @@ const {PathModel} = require("./models/PathModel"); // in order to include the sc
 //Static files
 
 app.use('/client', express.static(path.join(__dirname, 'client')));
-app.use('/connections', express.static(path.join(__dirname, 'connections')));
 app.use('/error', express.static(path.join(__dirname, 'error')));
 //Socket setup
-// var socket = io.connect('http://localhost:8080/');
 
-// socket.on('connect', function(socket){
-//     console.log("made socket connection", socket.id);
-// });
-
+io.on('connection', (socket) => {
+    console.log('Connected to socket!')
+})
 
 var countOfScreen = 3;
 app.get('/screen=:num', async (req, res) => {
