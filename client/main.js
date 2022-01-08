@@ -1,6 +1,22 @@
+function getJson(ScreenId) {
+    console.log(window.location.origin + "/screen=" + ScreenId);
+    $.ajax({
+        type: "GET",
+        url: window.location.origin + "/post",
+        data: {
+            ScreenId : ScreenId
+        },
+        success: function (response) {
+            console.log(response)
+            return response;
+        }
+    });
+
+}
+
 $(document).ready(function () {
     i = 0;
-    json = getJson();
+    json = getJson(getScreen());
     scheduler = getSchedule();
     loadTemplates();
 });

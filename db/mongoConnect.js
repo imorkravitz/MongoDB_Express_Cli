@@ -11,17 +11,44 @@ async function main() {
   //________________________collections________________________//
   const db = mongoose.connection;
 
-  db.dropCollection('jsonDB', (err, data) => {
+  await db.dropCollection('screens', (err, data) => {
     if (err) {
       console.log('Error')
     } else console.log('delete')
   });
 
-  db.collection('jsonDB').insertMany(jsData), (err, data) => {
+  await db.collection('screens').insertMany(jsData), (err, data) => {
     if (err) {
       console.log('Error')
     } else console.log('insert json to mongo')
   };
-}
+  // function initData() {
+    //   for posts:
+    //     insert posts with post numbers 
+    //   for sc in  screen :
+    //     fin posts of sc
+    //       insert sc with list of relevant posts
+    // }
+    
+    // db.collection('screens').find({}).toArray((error, tasks) => {
+      //   console.log(tasks)
+      
+      
+      // in collection screen:
+      //   get screen.posts
+      // for post in posts :
+      //   in collection posts : 
+      //     get posts and add to jsonlist
+      
+      // return json list
+      
+      
+    }
+      function jsonData(){
+      console.log("json for the client!")
+      return jsData;
+    }
+//-----
 
-exports.default = mongoose;
+
+module.exports = {mongoose, jsonData};
