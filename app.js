@@ -19,7 +19,24 @@ app.use('/client', express.static(path.join(__dirname, 'client')));
 app.use('/error', express.static(path.join(__dirname, 'error')));
 //Socket setup
 
+var clientConnect = [];
+var storeClientConnection = function (id, data){
+    message.push({id: id, data: data});
+    if(message > 100){
+        message.shift();
+    }
+}
+
+io.sockets.on('connection', function (client){
+    client.on("messege", function(message){
+        client.get("id", function(err, data){
+            storeMessage(data, message)
+        });
+    });
+});
+
 io.on('connection', (socket) => {
+    
     console.log('Connected to socket!')
 });
 
