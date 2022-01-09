@@ -12,19 +12,19 @@ http.listen(port,() => console.log(`server is listening on port ${port}`));
 
 //MongoConnection
 const MongoClient = require('./db/MongoClient');
+const { main } = require('./db/MongoClient');
 //Static files
-app.use(express.json());
+// app.use(express.json());
 app.use('/client', express.static(path.join(__dirname, 'client')));
 app.use('/error', express.static(path.join(__dirname, 'error')));
 //Socket setup
 
 io.on('connection', (socket) => {
     console.log('Connected to socket!')
-})
+});
 
 
-app.get('/post', (req, res) => {
-})
+app.get('/post', main);
 
 var countOfScreen = 3;
 app.get('/screen=:num', async (req, res) => {
