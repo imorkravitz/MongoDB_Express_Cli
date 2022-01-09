@@ -10,7 +10,29 @@
     <script src="client/main.js"></script>
     <script src="client/scheduler.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.0/socket.io.js"></script>
+
+    <script>
+        
+        function getScreen() {
+            var url = window.location.pathname;
+            var arr = url.split('=');
+            return arr[1];
+        }
+
+        //connecting to socket
+        var socket = io('http://localhost:8080/');
+
+        socket.on('connect', function () {
+            // call the server-side function 'adduser' and send one parameter (value of prompt)
+            socket.emit('adduser', getScreen());
+        });
+
+    </script>
+
+
+
 
 
 
@@ -19,18 +41,7 @@
 
 <body>
     <div id="main_page"></div>
-    <script>
-        //connecting to socket
-        var socket = io('http://localhost:8080/');
 
-        console.log('check 1', socket.connected);
-        io.connect();
-        console.log('check 1', socket.connected);
-        //after connected
-        socket.on('connect', function () {
-            console.log('check 1', socket.connected);
-            console.log('check 2', socket.connected);
-        });
-    </script>
 </body>
+
 </html>

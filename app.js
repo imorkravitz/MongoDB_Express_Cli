@@ -19,38 +19,40 @@ app.use('/client', express.static(path.join(__dirname, 'client')));
 app.use('/error', express.static(path.join(__dirname, 'error')));
 //Socket setup
 
-var clientConnect = [];
-var storeClientConnection = function (id, data){
-    message.push({id: id, data: data});
-    if(message > 100){
-        message.shift();
-    }
-}
-
-io.sockets.on('connection', function (client){
-    client.on("messege", function(message){
-        client.get("id", function(err, data){
-            storeMessage(data, message)
-        });
-    });
-});
-
-io.on('connection', (socket) => {
-    
-    console.log('Connected to socket!')
-});
-
 
 app.get('/post', main);
 
 var countOfScreen = 3;
 app.get('/screen=:num', async (req, res) => {
     var num = req.params.num;
-
-    if(num>0 && num<=countOfScreen){
+    
+    if(num>0){
         res.sendFile(path.join(__dirname, process.env.pathScreen));
     }else{
         res.sendFile(path.join(__dirname, process.env.pathError));
     }
 });
 
+var usernames = {};
+
+io.sockets.on('connection', function (socket) {
+
+    // when the client emits 'adduser', this listens and executes
+    socket.on('adduser', function(username){
+      // we store the username in the socket session for this client
+      socket.username = username;
+      // add the client's username to the global list
+      usernames[username] = username;
+      // echo to client they've connected
+    console.log("screen " + username + " is connected");
+    });
+  
+    // when the user disconnects.. perform this
+    socket.on('disconnect', function(){
+        // remove the username from global usernames list
+        console.log("screen " + usernames[socket.username] + " is disconnected");
+      delete usernames[socket.username];
+      // update list of users in chat, client-side
+     
+    });
+  });

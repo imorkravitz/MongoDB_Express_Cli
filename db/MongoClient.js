@@ -4,7 +4,6 @@ const connectionURL = 'mongodb://localhost:27017/'
 const dataBaseName = 'mydb';
 const jsData = require('../client/jsonData.json');
 
-
 var db;
 
 MongoClient.connect(connectionURL, {
@@ -17,6 +16,8 @@ MongoClient.connect(connectionURL, {
         console.log("connection")
     }
     db = client.db(dataBaseName)
+
+    // db.collection('screens').drop();
 });
 
 module.exports = {
