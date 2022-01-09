@@ -11,12 +11,9 @@ const path = require('path');
 http.listen(port,() => console.log(`server is listening on port ${port}`));
 
 //MongoConnection
-const db = require("./db/mongoConnect");
-const {PathModel} = require("./models/PathModel"); // in order to include the schema
-
+const MongoClient = require('./db/MongoClient');
 //Static files
-
-// app.use(express.json());
+app.use(express.json());
 app.use('/client', express.static(path.join(__dirname, 'client')));
 app.use('/error', express.static(path.join(__dirname, 'error')));
 //Socket setup
@@ -25,10 +22,8 @@ io.on('connection', (socket) => {
     console.log('Connected to socket!')
 })
 
-// console.log(db.jsonData());
 
 app.get('/post', (req, res) => {
-    res.send(db.jsonData())
 })
 
 var countOfScreen = 3;
