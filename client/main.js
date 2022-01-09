@@ -1,25 +1,36 @@
-function getJson(ScreenId) {
+
+function GETJSON(ScreenId) {
     console.log(window.location.origin + "/screen=" + ScreenId);
-    $.ajax({
+    return $.ajax({
         type: "GET",
         url: window.location.origin + "/post",
         data: {
-            ScreenId : ScreenId
+            ScreenId: ScreenId
         },
         success: function (response) {
-            console.log(response)
             return response;
         }
     });
+}
 
+async function display(id) {
+    try{
+        json = await GETJSON(id);
+        console.log(json);
+        scheduler = getSchedule();
+        await loadTemplates();
+    }catch(e){
+        console.log(e);
+    }
 }
 
 $(document).ready(function () {
+    id = getScreen();
+    display(id);
     i = 0;
-    json = getJson(getScreen());
-    scheduler = getSchedule();
-    loadTemplates();
+
 });
+
 
 function loadTemplates() {
     id = getScreen();
