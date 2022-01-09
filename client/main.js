@@ -1,4 +1,3 @@
-
 function GETJSON(ScreenId) {
     console.log(window.location.origin + "/screen=" + ScreenId);
     return $.ajax({
@@ -14,21 +13,16 @@ function GETJSON(ScreenId) {
 }
 
 async function display(id) {
-    try{
-        json = await GETJSON(id);
-        console.log(json);
-        scheduler = getSchedule();
-        await loadTemplates();
-    }catch(e){
-        console.log(e);
-    }
+    json = await GETJSON(id);
+    console.log(json);
+    scheduler = getSchedule();
+    loadTemplates();
 }
 
 $(document).ready(function () {
     id = getScreen();
     display(id);
     i = 0;
-
 });
 
 
