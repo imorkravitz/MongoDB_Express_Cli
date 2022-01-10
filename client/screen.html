@@ -1,3 +1,8 @@
+<!-- Or Kravitz, 308248293
+Nadav Voikovitch, 308526508
+Gil Cohen, 308115559
+Itai Levy, 311402754 -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +10,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <script src="client/jsonData.js"></script> -->
     <script src="client/jquery-3.6.0.min.js"></script>
     <script src="client/main.js"></script>
     <script src="client/scheduler.js"></script>
@@ -25,7 +29,7 @@
         var socket = io('http://localhost:8080/');
 
         socket.on('connect', function () {
-            // call the server-side function 'adduser' and send one parameter (value of prompt)
+            // call the server-side function 'adduser' and send one parameter
             socket.emit('adduser', getScreen());
         });
 

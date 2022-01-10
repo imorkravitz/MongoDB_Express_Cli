@@ -25,12 +25,8 @@ $(document).ready(function () {
     i = 0;
 });
 
-
 function loadTemplates() {
-    // id = getScreen();
-    // if (i == 0) {
-    //     console.log("screen id: " + id);
-    // }
+
     var adaptorId = id % 3;
     var temp = scheduler[adaptorId];
     var num = i % Object.keys(temp.advertising).length;
