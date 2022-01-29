@@ -18,7 +18,6 @@ const {
   main
 } = require('./db/MongoClient');
 //Static files
-// app.use(express.json());
 app.use('/client', express.static(path.join(__dirname, 'client')));
 app.use('/error', express.static(path.join(__dirname, 'error')));
 //Socket setup
@@ -36,7 +35,13 @@ app.get('/screen=:num', async (req, res) => {
   }
 });
 
+app.get('/login',(req, res) =>{
+  res.sendFile(path.join(__dirname, './client/login.html'));
+})
+
 var usernames = {};
+var adminUser = 'orkr';
+var adminpass = '123456';
 
 io.sockets.on('connection', function (socket) {
 
@@ -52,12 +57,26 @@ io.sockets.on('connection', function (socket) {
   });
 
   // when the user disconnects.. perform this
-  socket.on('disconnect', function () {
+    socket.on('disconnect', function () {
     // remove the username from global usernames list
     console.log("screen " + usernames[socket.username] + " is disconnected");
     MongoClient.deleteUsers(usernames[socket.username]);
     delete usernames[socket.username];
     // update list of users in chat, client-side
-
   });
-});
+  
+  socket.on('loginConfirm', function (username, password) {
+    if(adminUser == username && adminpass == password){
+            app.get('/admin',  (req, res)=>{
+        res.sendFile(path.join(__dirname, "./admin/admin.html"));
+      });
+
+      io.sockets.emit('loginSuccess', 'http://localhost:8080/admin')
+    }
+  });
+
+  socket.on('Success', function () {
+    
+      io.sockets.emit('loginSuccess', 'http://localhost:8080/admin')
+    })
+  });
