@@ -3,7 +3,10 @@ const MongoClient = mongodb.MongoClient;
 const connectionURL = 'mongodb://localhost:27017/'
 const dataBaseName = 'mydb';
 const jsData = require('../client/jsonData.json');
+const bcrypt = require('bcryptjs/dist/bcrypt');
+const bodyParser=require('body-parser')
 
+// app.use(bodyParser.json())
 var db;
 
 MongoClient.connect(connectionURL, {
@@ -80,5 +83,47 @@ module.exports = {
         db.collection('activeUsers').deleteMany({
             screen: screenNum
         })
+    },
+    insertAdmin: function(userName , userPass){
+        
+        let answer = db.collection('admins').find({username : userName}).toArray(async (err,data) => {
+            if(data[0]){
+                
+                console.log("The admin is already exist!")
+                return 0;
+            }else{
+                db.collection('admins').insertOne({
+                    username: userName,
+                    password: userPass
+                
+                },(err, data) => {
+                    if (err) {
+                        console.log("can't save admin  to db");
+                        
+                    }
+                    console.log('The admin '+userName+' is insert to DB')
+                })
+            }
+        })
+     if(answer){
+        return 1;
+    }else{
+        return 0;
+    }
+    },
+     checkUser: async function (userName , userPass){
+        
+        let answer = await db.collection('admins').find({username : userName}).toArray((err,data) => {
+            if(data[0]){
+                console.log(data[0].password)
+                    if(bcrypt.compare(userPass, data[0].password)){//will compare between the 2 passwords
+                        console.log('Oved')
+                        return 1;
+                    }
+                    // //res.send(data)
+                return 1;
+            }
+        })
+
     }
 }

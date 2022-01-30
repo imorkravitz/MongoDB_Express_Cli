@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="wisth=device-width, initial-scale=1.0"/>
+    <title>Login</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <form id="login">
+        <input type="text" autocomplete="off" id="username" placeholder="Username"/>
+        <input type="password" autocomplete="off" id="password" placeholder="Password"/>
+        <input type="submit" value="Submit Form"/>
+    </form>
+
+    <script>
+        const form=document.getElementById('login')
+        form.addEventListener('submit',login)
+        
+        //send data as JSON
+        async function login(event){
+            event.preventDefault()
+            const username=document.getElementById('username').value
+            const password=document.getElementById('password').value
+            
+
+            const result = await fetch('/login',{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({
+                    username,
+                    password
+                })
+
+            }).then((res)=>res.json())
+            if(result.error){
+                console.log('Got token: ', result.data)
+                alert(result.error);
+            }
+
+            console.log(result)
+
+        }
+    </script>
+</body>

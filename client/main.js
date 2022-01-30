@@ -11,9 +11,6 @@ function GETJSON(ScreenId) {
         }
     });
 }
-
-
-
 async function display(id) {
     json = await GETJSON(id);
     console.log(json);
