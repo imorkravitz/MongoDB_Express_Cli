@@ -1,12 +1,14 @@
+const bcrypt = require('bcryptjs/dist/bcrypt');
+const bcryptjs = require('bcryptjs');
+const req = require('express/lib/request');
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 const connectionURL = 'mongodb://localhost:27017/'
 const dataBaseName = 'mydb';
 const jsData = require('../client/jsonData.json');
-const bcrypt = require('bcryptjs/dist/bcrypt');
-const bodyParser=require('body-parser')
+const jwt=require('jsonwebtoken')
+// const JWT_SECRET='njkvdsnjkvdsjk43254345@#!@#@!5ddcdsfdscdscdvvrecewxq'
 
-// app.use(bodyParser.json())
 var db;
 
 MongoClient.connect(connectionURL, {
@@ -84,46 +86,68 @@ module.exports = {
             screen: screenNum
         })
     },
-    insertAdmin: function(userName , userPass){
+    signup:(req,res)=>{
+        console.log(req.body)
+        const {username,password:plainTextPassword} = req.body;
+        if(!username ||typeof username !=='string'){
+          return res.json({status: 'error',error: 'Invalid username'})
+        }
+        if(!plainTextPassword|| typeof plainTextPassword !=='string'){
+          return res.json({status: 'error',error: 'Invalid password'})
+        }
+        if(plainTextPassword.length<5){
+          return res.json({
+            status: 'error',
+            error: 'Password too small. Should be at least 6 characters'
+          })
+        }
         
-        let answer = db.collection('admins').find({username : userName}).toArray(async (err,data) => {
-            if(data[0]){
-                
-                console.log("The admin is already exist!")
-                return 0;
-            }else{
-                db.collection('admins').insertOne({
-                    username: userName,
-                    password: userPass
-                
-                },(err, data) => {
-                    if (err) {
-                        console.log("can't save admin  to db");
-                        
-                    }
-                    console.log('The admin '+userName+' is insert to DB')
+        bcryptjs.hash(plainTextPassword,10,(error,hash)=>{
+            if(error){
+                return res.status(500).json({
+                    error
                 })
             }
-        })
-     if(answer){
-        return 1;
-    }else{
-        return 0;
-    }
+            db.collection('admins').find({
+                username: username
+            }).toArray((err,data)=>{
+                if(data[0]){
+                    res.json({
+                        message:'User already exist!'
+                    })
+                }else{
+                    db.collection('admins').insertOne({
+                        username: username,
+                        password: hash
+                    })
+                    res.json({
+                        message:'Admin created!'
+                    })
+                }
+            })
+        });
     },
-     checkUser: async function (userName , userPass){
-        
-        let answer = await db.collection('admins').find({username : userName}).toArray((err,data) => {
-            if(data[0]){
-                console.log(data[0].password)
-                    if(bcrypt.compare(userPass, data[0].password)){//will compare between the 2 passwords
-                        console.log('Oved')
-                        return 1;
-                    }
-                    // //res.send(data)
-                return 1;
+    login:(req, res) => {
+        const {username,password} = req.body;
+        //console.log(username, password)
+        // res.json({status: 'ok'})
+        db.collection('admins').find({username: username}).toArray(async(error,user) => {
+            console.log(password ,user[0].password)
+            if(error){
+                console.log('error')
+            }
+            if(user == null){
+                return res.status(400).send('Cannot find user')
+            }
+            try{
+                if(await bcryptjs.compare(password ,user[0].password)){
+                    res.json({status: 'ok'})
+                }else{
+                    res.json({error: 'username or password is incorrect!'})
+                }
+            }catch(error){
+                res.status(500).send();
             }
         })
-
     }
 }

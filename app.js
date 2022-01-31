@@ -3,9 +3,9 @@ const express = require('express');
 const app = express();
 const http = require('http').Server(app);
 const env = require('dotenv');
-
-const bodyParser=require('body-parser')
+const bcryptjs = require('bcryptjs');
 const bcrypt=require('bcryptjs')
+const bodyParser=require('body-parser')
 
 
 env.config();
@@ -19,61 +19,37 @@ http.listen(port, () => console.log(`server is listening on port ${port}`));
 
 //MongoConnection
 const MongoClient = require('./db/MongoClient');
-const {
-  main
-} = require('./db/MongoClient');
+const {main, signup, login} = require('./db/MongoClient');
+
 //Static files
 app.use('/client', express.static(path.join(__dirname, 'client')));
 app.use('/error', express.static(path.join(__dirname, 'error')));
 app.use('/',express.static(path.join(__dirname,'./client/register.html')))
 app.use(bodyParser.json())
-
+const res = require('express/lib/response');
+const { sign } = require('crypto');
 
 //Socket setup
 
+
 app.get('/post', main);
-
-app.post('/login', (req,res) => {
-
-  const {username, password} = req.body;
-  res.json({status: 'ok', data: 'sssdsdsds'})
-  let test = MongoClient.checkUser(username , password);
-  console.log(test +' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
-
-  })
-  
-  // console.log(MongoClient.main)
-  
-  app.get('/',(req,res)=>{
-    res.sendFile(path.join(__dirname,'./client/register.html'));
-  })
-  app.post('/register',async (req,res)=>{
-  
-    console.log(req.body)
-    const {username,password:plainTextPassword} = req.body;
-    if(!username ||typeof username !=='string'){
-      return res.json({status: 'error',error: 'Invalid username'})
-    }
-    if(!plainTextPassword|| typeof plainTextPassword !=='string'){
-      return res.json({status: 'error',error: 'Invalid password'})
-    }
-    if(plainTextPassword.length<5){
-      console.log('the pass lens 5');
-      return res.json({
-        status: 'error',
-        error: 'Password too small. Should be at least 6 characters'
-      })
-    }
-    const password = await bcrypt.hash(plainTextPassword,10);
-    //console.log(await bcrypt.hash(password,10))
-    let checkin = MongoClient.insertAdmin(username,password);
-    console.log('CHECKING: '+ checkin);
-    
-    res.json({status:'ok'})
+app.get('/',(req,res)=>{
+  res.sendFile(path.join(__dirname,'./client/register.html'));
 })
+app.get('/login1',(req,res)=>{
+  res.sendFile(path.join(__dirname,'./client/login1.html'));
+})
+app.post('/register',signup)
+app.post('/login1',login)
 
+app.get('/login',(req, res) =>{
+  res.sendFile(path.join(__dirname, './client/login.html'));
+})
+    
+  app.get('/register',(req,res)=>{
+    res.sendFile(path.join(__dirname,'./client/register.html'));
+  });
 
-var countOfScreen = 3;
 app.get('/screen=:num', async (req, res) => {
   var num = req.params.num;
 
@@ -89,8 +65,6 @@ app.get('/login',(req, res) =>{
 })
 
 var usernames = {};
-var adminUser = 'orkr';
-var adminpass = '123456';
 
 io.sockets.on('connection', function (socket) {
 
@@ -113,19 +87,4 @@ io.sockets.on('connection', function (socket) {
     delete usernames[socket.username];
     // update list of users in chat, client-side
   });
-  
-  socket.on('loginConfirm', function (username, password) {
-    if(adminUser == username && adminpass == password){
-            app.get('/admin',  (req, res)=>{
-        res.sendFile(path.join(__dirname, "./admin/admin.html"));
-      });
-
-      io.sockets.emit('loginSuccess', 'http://localhost:8080/admin')
-    }
-  });
-
-  socket.on('Success', function () {
-    
-      io.sockets.emit('loginSuccess', 'http://localhost:8080/admin')
-    })
-  });
+});
