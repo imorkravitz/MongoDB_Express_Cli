@@ -5,10 +5,15 @@ h1 {
 
 div{
     margin-left: 2%;
+    margin: 15px;
 }
 
 p {
     margin: 25px;
+}
+
+button{
+    margin-bottom: 25px;
 }
 
 

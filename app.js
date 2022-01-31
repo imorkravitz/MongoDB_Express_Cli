@@ -7,12 +7,10 @@ const bcryptjs = require('bcryptjs');
 const bcrypt=require('bcryptjs')
 const bodyParser=require('body-parser')
 
-
 env.config();
 const port = process.env.PORT;
-const io = require('socket.io')(http, {
-  cors: {}
-});
+
+const io = require('socket.io')(http, {cors: {}});
 const path = require('path');
 
 http.listen(port, () => console.log(`server is listening on port ${port}`));
@@ -24,35 +22,32 @@ const {main, signup, login} = require('./db/MongoClient');
 //Static files
 app.use('/client', express.static(path.join(__dirname, 'client')));
 app.use('/error', express.static(path.join(__dirname, 'error')));
-app.use('/',express.static(path.join(__dirname,'./client/register.html')))
+app.use('/',express.static(path.join(__dirname, process.env.pathRegister)))
 app.use(bodyParser.json())
 const res = require('express/lib/response');
 const { sign } = require('crypto');
 
 //Socket setup
-
-
 app.get('/post', main);
 app.get('/',(req,res)=>{
-  res.sendFile(path.join(__dirname,'./client/register.html'));
+  res.sendFile(path.join(__dirname, process.env.pathRegister));
 })
-app.get('/login1',(req,res)=>{
-  res.sendFile(path.join(__dirname,'./client/login1.html'));
+app.get('/login',(req,res)=>{
+  res.sendFile(path.join(__dirname, process.env.pathLogin));
 })
 app.post('/register',signup)
-app.post('/login1',login)
+app.post('/login',login)
 
 app.get('/login',(req, res) =>{
-  res.sendFile(path.join(__dirname, './client/login.html'));
+  res.sendFile(path.join(__dirname, process.env.pathLogin));
 })
     
   app.get('/register',(req,res)=>{
-    res.sendFile(path.join(__dirname,'./client/register.html'));
+    res.sendFile(path.join(__dirname, process.env.pathRegister));
   });
 
 app.get('/screen=:num', async (req, res) => {
   var num = req.params.num;
-
   if (num > 0) {
     res.sendFile(path.join(__dirname, process.env.pathScreen));
   } else {
@@ -61,7 +56,7 @@ app.get('/screen=:num', async (req, res) => {
 });
 
 app.get('/login',(req, res) =>{
-  res.sendFile(path.join(__dirname, './client/login.html'));
+  res.sendFile(path.join(__dirname, process.env.pathLogin));
 })
 
 var usernames = {};
