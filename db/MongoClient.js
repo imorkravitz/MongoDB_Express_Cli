@@ -143,7 +143,7 @@ module.exports = {
                 if(await bcryptjs.compare(password ,user[0].password)){
                     res.json({status: 'ok'})
                 }else{
-                    res.json({error: 'username or password is incorrect!'})
+                    res.json({error: 'Username or Password are incorrect!'})
                 }
             }catch(error){
                 res.status(500).send();

@@ -16,15 +16,15 @@ Itai Levy, 311402754 -->
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.0/socket.io.js"></script>
+    <link rel="stylesheet" href="/client/login.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <script>
-        
         function getScreen() {
             var url = window.location.pathname;
             var arr = url.split('=');
             return arr[1];
         }
-
         //connecting to socket
         var socket = io('http://localhost:8080/');
 
@@ -32,20 +32,32 @@ Itai Levy, 311402754 -->
             // call the server-side function 'adduser' and send one parameter
             socket.emit('adduser', getScreen());
         });
-
     </script>
 
-
-
-
-
-
-    <title>WebSocket</title>
+    <title>Advertisements</title>
 </head>
 
 <body>
     <div id="main_page"></div>
 
-</body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav-edit">
+        <a class="navbar-brand" href="/screen=1" >Advertisements<span class="sr-only"> (Movies)</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/register"> Register</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
 
+
+</body>
 </html>

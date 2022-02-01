@@ -11,8 +11,27 @@
 </head>
 <body>
     <h1>Login</h1>
+    
+      <nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav-edit">
+        <a class="navbar-brand" href="/screen=1" >Advertisements<span class="sr-only"> (Movies)</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/register"> Register</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
     <form id="login">
-        <hr size="3" width="50%" color="black">  
+        <hr size="3" width="100%" color="black">  
         <form class="row g-3">
           <div class="col-2">
             <label for="exampleInputEmail1" class="form-label">User Name</label>
@@ -24,7 +43,7 @@
             <input type="password" class="form-control" width="300" id="userPassword">
           </div>
             <div class="col-12">
-          <button type="submit" class="btn btn-primary " id="submitBtn">Submit</button>
+          <button type="submit" class="btn btn-dark " id="submitBtn">Submit</button>
           <p><a href="http://localhost:8080/admin" id="path"></a></p>
         </div>
         </form>
