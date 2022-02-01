@@ -3,8 +3,6 @@ const express = require('express');
 const app = express();
 const http = require('http').Server(app);
 const env = require('dotenv');
-const bcryptjs = require('bcryptjs');
-const bcrypt=require('bcryptjs')
 const bodyParser=require('body-parser')
 
 env.config();

@@ -1,13 +1,9 @@
-const bcrypt = require('bcryptjs/dist/bcrypt');
 const bcryptjs = require('bcryptjs');
-const req = require('express/lib/request');
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 const connectionURL = 'mongodb://localhost:27017/'
 const dataBaseName = 'mydb';
 const jsData = require('../client/jsonData.json');
-const jwt=require('jsonwebtoken')
-// const JWT_SECRET='njkvdsnjkvdsjk43254345@#!@#@!5ddcdsfdscdscdvvrecewxq'
 
 var db;
 
@@ -129,8 +125,7 @@ module.exports = {
     },
     login:(req, res) => {
         const {username,password} = req.body;
-        //console.log(username, password)
-        // res.json({status: 'ok'})
+     
         db.collection('admins').find({username: username}).toArray(async(error,user) => {
             console.log(password ,user[0].password)
             if(error){
