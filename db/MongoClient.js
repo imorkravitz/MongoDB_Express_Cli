@@ -136,6 +136,7 @@ module.exports = {
             }
             try{
                 if(await bcryptjs.compare(password ,user[0].password)){
+                    adminLogin()
                     res.json({status: 'ok'})
                 }else{
                     res.json({error: 'Username or Password are incorrect!'})
@@ -144,5 +145,12 @@ module.exports = {
                 res.status(500).send();
             }
         })
+    },
+    adminLogin: function (response) {
+        jsonvariable = response['ok'].toString();
+        if(jsonvariable=='true'){
+        alert("redirect page to");
+        window.location = "/client/admin.html";
+        }
     }
 }
