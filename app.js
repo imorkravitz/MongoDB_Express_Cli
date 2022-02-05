@@ -23,7 +23,8 @@ const {
   login,
   getUserById,
   history,
-  currentConnected
+  currentConnected,
+  Scheduler
 } = require('./db/MongoClient');
 
 
@@ -61,8 +62,11 @@ app.use(bodyParser.json())
 
 //Socket setup
 app.get('/post', main);
+app.get('/post1', Scheduler)
 app.get('/historyUsers', history)
 app.get('/currentConnected', currentConnected)
+
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, process.env.pathRegister));
 })

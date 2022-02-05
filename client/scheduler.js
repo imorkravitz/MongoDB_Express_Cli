@@ -1,4 +1,4 @@
-function getSchedule() {
+function getScheduler() {
     var schedule = [{
             "id": 1,
             "advertising": [0, 2, 4],
@@ -7,13 +7,13 @@ function getSchedule() {
         {
             "id": 2,
             "advertising": [2, 1],
-            "tempo": [1000, 4000, ]
+            "tempo": [1000, 4000 ]
         },
         {
             "id": 3,
             "advertising": [3, 4],
             "tempo": [2000, 3000]
-        },
+        }
     ]
     return schedule;
 }

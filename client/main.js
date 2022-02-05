@@ -11,10 +11,22 @@ function GETJSON(ScreenId) {
         }
     });
 }
+function getSchedulerFromMongo(ScreenId) {
+    return $.ajax({
+        type: "GET",
+        url: window.location.origin + "/post1",
+        data: {
+        },
+        success: function (response) {
+            return response;
+        }
+    });
+}
 async function display(id) {
     json = await GETJSON(id);
+    scheduler = await getSchedulerFromMongo();
     console.log(json);
-    scheduler = getSchedule();
+    //scheduler = getScheduler();
     loadTemplates();
 }
 

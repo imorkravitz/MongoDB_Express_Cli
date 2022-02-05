@@ -4,6 +4,7 @@ const MongoClient = mongodb.MongoClient;
 const connectionURL = 'mongodb://localhost:27017/'
 const dataBaseName = 'mydb';
 const jsData = require('../client/jsonData.json');
+const jsScheduler = require('../client/scheduler.json');
 
 var db;
 
@@ -20,6 +21,7 @@ MongoClient.connect(connectionURL, {
 
 
     let flag = 0;
+    let flag1 = 0
     db.collection('screens').insertMany(jsData, (err, data) => {
         if (err) {
             flag = 1;
@@ -40,7 +42,17 @@ MongoClient.connect(connectionURL, {
             })
         }
     })
+    db.collection('scheduler').drop();
+    console.log('scheduler deleted')
+    db.collection('scheduler').insertMany(jsScheduler, (err, data) => {
+        if (err) {
+            console.error('error to upload scheduler')
+        } else {
+            console.log('insert scheduler to MongoDB 2')
+        }
+    })
 });
+
 
 module.exports = {
     main: function (req, res) {
@@ -53,6 +65,16 @@ module.exports = {
             res.send(data);
         });
     },
+    Scheduler: function( req, res ) {
+        db.collection('scheduler').find().toArray(function (err, data) {
+            if (err) {
+                console.log('Error')
+            } else if (data != null)
+                console.log(data)
+            res.send(data);
+        });
+    }
+    ,
 
     getUserById: async (id) => {
         const user = await db.collection('admins').findOne({
