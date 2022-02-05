@@ -4,6 +4,7 @@ const MongoClient = mongodb.MongoClient;
 const connectionURL = 'mongodb://localhost:27017/'
 const dataBaseName = 'mydb';
 const jsData = require('../client/jsonData.json');
+const jwt = require('jsonwebtoken')
 
 var db;
 
@@ -131,12 +132,14 @@ module.exports = {
             if(error){
                 console.log('error')
             }
+            if(!user){
+                return res.json({status: 'error', error: 'Invalid username/password'})
+            }
             if(user == null){
                 return res.status(400).send('Cannot find user')
             }
             try{
                 if(await bcryptjs.compare(password ,user[0].password)){
-                    adminLogin()
                     res.json({status: 'ok'})
                 }else{
                     res.json({error: 'Username or Password are incorrect!'})
@@ -144,13 +147,8 @@ module.exports = {
             }catch(error){
                 res.status(500).send();
             }
+        
         })
-    },
-    adminLogin: function (response) {
-        jsonvariable = response['ok'].toString();
-        if(jsonvariable=='true'){
-        alert("redirect page to");
-        window.location = "/client/admin.html";
-        }
+      
     }
 }
