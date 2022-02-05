@@ -21,18 +21,41 @@ const {
   main,
   signup,
   login,
+  getUserById
 } = require('./db/MongoClient');
 
+
+const cookieParser = require('cookie-parser')
+
+
+app.use(cookieParser());
+
+async function protectedRoute(req,res,next){
+  try {
+    console.log('cookie',req.cookies,req.path);
+    const protected = ['/admin.html']
+    if(protected.includes(req.path)){
+      if(req.cookies.token){
+        //todo:  find user in db
+        const user = await getUserById(req.cookies.token)
+        if(user) return next();
+        res.redirect('/login.html')
+
+      }else {
+        res.redirect('/login.html')
+      }
+    }else {
+      next()
+    }
+  } catch (error) {
+  }
+}
+
 //Static files
-app.use('/client', express.static(path.join(__dirname, 'client')));
+app.use(protectedRoute, express.static(path.join(__dirname, 'admin')))
+app.use('/client', express.static(path.join(__dirname, 'client')))
 app.use('/error', express.static(path.join(__dirname, 'error')));
-app.use('/', express.static(path.join(__dirname, process.env.pathRegister)))
 app.use(bodyParser.json())
-const res = require('express/lib/response');
-const {
-  sign
-} = require('crypto');
-const { on } = require('nodemon');
 
 //Socket setup
 app.get('/post', main);
@@ -44,7 +67,6 @@ app.get('/login', (req, res) => {
 })
 app.post('/register', signup)
 app.post('/login', login)
-// app.post('/admin',adminLogin)
 
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, process.env.pathLogin));
@@ -56,8 +78,8 @@ app.get('/register', (req, res) => {
 
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, process.env.pathAdmin))
-
 })
+
 app.get('/screen=:num', async (req, res) => {
   var num = req.params.num;
   if (num > 0) {

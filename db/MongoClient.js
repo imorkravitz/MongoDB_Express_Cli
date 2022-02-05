@@ -4,7 +4,6 @@ const MongoClient = mongodb.MongoClient;
 const connectionURL = 'mongodb://localhost:27017/'
 const dataBaseName = 'mydb';
 const jsData = require('../client/jsonData.json');
-const jwt = require('jsonwebtoken')
 
 var db;
 
@@ -55,6 +54,14 @@ module.exports = {
         });
     },
 
+    getUserById: async (id) => {
+        const user = await db.collection('admins').findOne({
+            _id: mongodb.ObjectId(id)
+        });
+        console.log('get user by id', user);
+        return user;
+    },
+
     // This is store all the clients that are connected the website into MongoDB
     addUsers: function (screenNum) {
 
@@ -62,10 +69,12 @@ module.exports = {
             screen: screenNum
         })
 
-        db.collection('historyUsers').find({screen :screenNum}).toArray((err,data) => {
-            if(data[0]){
+        db.collection('historyUsers').find({
+            screen: screenNum
+        }).toArray((err, data) => {
+            if (data[0]) {
                 console.log("this user is already exist!")
-            }else{
+            } else {
                 db.collection('historyUsers').insertOne({
                     screen: screenNum
                 }, (err, data) => {
@@ -83,72 +92,94 @@ module.exports = {
             screen: screenNum
         })
     },
-    signup:(req,res)=>{
+    signup: (req, res) => {
         console.log(req.body)
-        const {username,password:plainTextPassword} = req.body;
-        if(!username ||typeof username !=='string'){
-          return res.json({status: 'error',error: 'Invalid username'})
+        const {
+            username,
+            password: plainTextPassword
+        } = req.body;
+        if (!username || typeof username !== 'string') {
+            return res.json({
+                status: 'error',
+                error: 'Invalid username'
+            })
         }
-        if(!plainTextPassword|| typeof plainTextPassword !=='string'){
-          return res.json({status: 'error',error: 'Invalid password'})
+        if (!plainTextPassword || typeof plainTextPassword !== 'string') {
+            return res.json({
+                status: 'error',
+                error: 'Invalid password'
+            })
         }
-        if(plainTextPassword.length<5){
-          return res.json({
-            status: 'error',
-            error: 'Password too small. Should be at least 6 characters'
-          })
+        if (plainTextPassword.length < 5) {
+            return res.json({
+                status: 'error',
+                error: 'Password too small. Should be at least 6 characters'
+            })
         }
-        
-        bcryptjs.hash(plainTextPassword,10,(error,hash)=>{
-            if(error){
+
+        bcryptjs.hash(plainTextPassword, 10, (error, hash) => {
+            if (error) {
                 return res.status(500).json({
                     error
                 })
             }
             db.collection('admins').find({
                 username: username
-            }).toArray((err,data)=>{
-                if(data[0]){
+            }).toArray((err, data) => {
+                if (data[0]) {
                     res.json({
-                        message:'User already exist!'
+                        message: 'User already exist!'
                     })
-                }else{
+                } else {
                     db.collection('admins').insertOne({
                         username: username,
                         password: hash
                     })
                     res.json({
-                        message:'Admin created!'
+                        message: 'Admin created!'
                     })
                 }
             })
         });
     },
-    login:(req, res) => {
-        const {username,password} = req.body;
-     
-        db.collection('admins').find({username: username}).toArray(async(error,user) => {
-            console.log(password ,user[0].password)
-            if(error){
+    login: (req, res) => {
+        const {
+            username,
+            password
+        } = req.body;
+
+        db.collection('admins').find({
+            username: username
+        }).toArray(async (error, user) => {
+            console.log(password, user[0].password)
+            if (error) {
                 console.log('error')
             }
-            if(!user){
-                return res.json({status: 'error', error: 'Invalid username/password'})
+            if (!user) {
+                return res.json({
+                    status: 'error',
+                    error: 'Invalid username/password'
+                })
             }
-            if(user == null){
+            if (user == null) {
                 return res.status(400).send('Cannot find user')
             }
-            try{
-                if(await bcryptjs.compare(password ,user[0].password)){
-                    res.json({status: 'ok'})
-                }else{
-                    res.json({error: 'Username or Password are incorrect!'})
+            try {
+                if (await bcryptjs.compare(password, user[0].password)) {
+                    res.cookie('token', user[0]._id)
+                    res.json({
+                        status: 'ok'
+                    })
+                } else {
+                    res.json({
+                        error: 'Username or Password are incorrect!'
+                    })
                 }
-            }catch(error){
+            } catch (error) {
                 res.status(500).send();
             }
-        
+
         })
-      
+
     }
 }
