@@ -4,7 +4,7 @@ function GETJSON(ScreenId) {
         type: "GET",
         url: window.location.origin + "/post",
         data: {
-            ScreenId: ScreenId
+            
         },
         success: function (response) {
             return response;

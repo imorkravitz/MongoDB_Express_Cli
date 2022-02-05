@@ -19,5 +19,7 @@ button{
 .navbar-brand{
     margin-left: 20px;
 }
-
+tr{
+    border-bottom: 2pt solid #000000;
+}
 

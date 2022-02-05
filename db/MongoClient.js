@@ -181,5 +181,23 @@ module.exports = {
 
         })
 
+    },
+    history: function(req, res){
+        db.collection('historyUsers').find().toArray((function (err, data) {
+            if (err) {
+                console.log('Error')
+            } else if (data != null)
+                console.log(data)
+            res.send(data);
+        }))
+    },
+    currentConnected: function(req, res) {
+        db.collection('activeUsers').find().toArray(function(err, data) {
+            if (err) {
+                console.log('Error')
+            } else if (data != null)
+                console.log(data)
+            res.send(data);
+        })
     }
 }
