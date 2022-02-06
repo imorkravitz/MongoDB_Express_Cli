@@ -65,7 +65,7 @@ app.get('/post', main);
 app.get('/post1', Scheduler)
 app.get('/historyUsers', history)
 app.get('/currentConnected', currentConnected)
-
+app.get('/editScheduler', main)
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, process.env.pathRegister));
