@@ -7,6 +7,7 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="/jquery-3.6.0.min.js"></script>
     <script src="/admin.js"></script>
+    <script src="/function.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 
     <link rel="stylesheet" href="./login.css">
@@ -73,7 +74,7 @@
 <br><br>
 
 
-<section>
+<section id = "TimingForm">
 
   <div class="container" style="text-align: center;">
     <table class="table table-striped" id="editMovies">
@@ -84,12 +85,12 @@
         <form class="row g-3">
           <div class="row">
           <div class="col-auto col-sd-6">
-            <label for="staticEmail2" class="visually-hidden">Coouse User Id</label>
+            <!-- <label for="staticEmail2" class="visually-hidden">Choose User Id</label> -->
             <input type="text" readonly class="form-control-plaintext" style="margin-right:10%;" id="staticEmail2" value="Coouse User Id">
           </div>
           <div class="col-auto col-sd-3">
             <label for="text" class="visually-hidden"></label>
-            <input type="text" class="form-control" id="jsonData" placeholder="coose number 1-3">
+            <input type="text" class="form-control" id="jsonData" placeholder="Choose a number">
           </div>
         </div>
         </form>
@@ -104,7 +105,7 @@
       </tbody id="editMovies">
     </table>
     <div>
-    <button type="button" class="btn btn-secondary">Submit</button>
+    <button type="button" class="btn btn-secondary" id = "TimingSubmit">Submit</button>
   </div>
   </div>
 </section>
@@ -128,9 +129,5 @@
     </div>
   </div>
 </section>
-
-
-
-
 </body>
 </html>

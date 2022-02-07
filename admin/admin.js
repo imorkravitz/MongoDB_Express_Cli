@@ -1,45 +1,7 @@
 
-function GETJSON1() {
-    return $.ajax({
-        type: "GET",
-        url: window.location.origin + "/historyUsers",
-        data: {
-        
-        },
-        success: function (response) {
-            
-            console.log(response)
-            return response;
-        }
-    });
-}
-function GETJSON2() {
-    return $.ajax({
-        type: "GET",
-        url: window.location.origin + "/currentConnected",
-        data: {
-        
-        },
-        success: function (response) {
-            
-            console.log(response)
-            return response;
-        }
-    });
-}
-function GETJSON3() {
-    return $.ajax({
-        type: "GET",
-        url: window.location.origin + "/editScheduler",
-        data: {
-        
-        },
-        success: function (response) {
-            
-            console.log(response)
-            return response;
-        }
-    });
+var count =1;
+function getAdvCount(){
+    return count
 }
 async function display() {
     jsonHistory = await GETJSON1();
@@ -48,6 +10,27 @@ async function display() {
     history();    // scheduler = getSchedule();
     currentConnection();
     editMovies();
+    AdvCount = getAdvCount()
+
+
+    $('#TimingSubmit').click(function() {
+        var i = 1
+        let Adv = [];
+        var temp;
+        console.log($('#jsonData').val());
+        for(i;i< (AdvCount);i++){
+            if($('#'+i+'Adv').val()){
+            Adv[i-1] = $('#'+i+'Adv').val();
+            console.log($('#'+i+'Adv').val())
+            }else{
+                console.log($('#'+i+'Adv').val())
+                Adv[i-1] = 'Non'
+            }
+        }
+        
+       
+      })
+
 }
 
 $(document).ready(function () {
@@ -81,16 +64,20 @@ function currentConnection() {
 
 
 function editMovies() {
-   var count = 1;
+   //var count = 1;
     var rows = "";
    // $('jsonData').placeholder.location('testing');
     $.each(jsonData, function(){
-         rows += "<tr><td> "+ count + "</td><td> <input type= 'text' class='form-control' id='formGroupExampleInput' placeholder='Example input placeholder'> </td></tr>"
+         rows += "<tr><td> "+ count + "</td><td> <input type= 'text' class='form-control' id='" + count +  "Adv' placeholder='Example input placeholder'> </td></tr>"
         //rows += "<tr><td> User </td><td>" + this.screen + "</td></tr>";
-        console.log(this.screen+"@@@@@@@@");
+        console.log(rows);
         count++;
     });
-    
+    console.log(rows);
     
     $( rows ).appendTo( "#editMovies" );
+
+
 }
+
+
