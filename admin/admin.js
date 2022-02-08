@@ -13,13 +13,33 @@ async function display() {
     AdvCount = getAdvCount()
 
 
-    $('#TimingSubmit').click(function() {
+    $('#TimingSubmit').click( async function() {
         var i = 1
         let Adv = [];
         var temp;
+
+
+        // function validateForm(num){
+
+        //     var z = num;
+          
+        //     if(!/^[0-9]+$/.test(z)){
+        //       alert("Please only enter numeric characters only for your Age! (Allowed input:0-9)")
+        //       return 0;
+        //     }
+          
+        //   }
+        
+        //   if(!validateForm($('#jsonData').val())){
+        //       return;
+        //   }
+
         console.log($('#jsonData').val());
+        var ID = $('#jsonData').val()
         for(i;i< (AdvCount);i++){
             if($('#'+i+'Adv').val()){
+                
+
             Adv[i-1] = $('#'+i+'Adv').val();
             console.log($('#'+i+'Adv').val())
             }else{
@@ -27,7 +47,21 @@ async function display() {
                 Adv[i-1] = 'Non'
             }
         }
-        
+        const result = await fetch('/pushScheduler',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+                ID,
+                Adv
+            })
+        }).then((res)=>res.json())
+        if(result.error){
+            alert(result.error);
+        }else if(result.status == 'ok'){
+        console.log("succses!")
+        }
        
       })
 
@@ -76,6 +110,8 @@ function editMovies() {
     console.log(rows);
     
     $( rows ).appendTo( "#editMovies" );
+
+
 
 
 }

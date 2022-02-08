@@ -24,7 +24,8 @@ const {
   getUserById,
   history,
   currentConnected,
-  Scheduler
+  Scheduler,
+  pushScheduler
 } = require('./db/MongoClient');
 
 
@@ -75,6 +76,8 @@ app.get('/login', (req, res) => {
 })
 app.post('/register', signup)
 app.post('/login', login)
+
+app.post('/pushScheduler', pushScheduler);
 
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, process.env.pathLogin));

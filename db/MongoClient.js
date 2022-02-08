@@ -1,7 +1,7 @@
 const bcryptjs = require('bcryptjs');
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
-const connectionURL = 'mongodb+srv://gilco:5893079@cluster.6649d.mongodb.net/test'
+const connectionURL = 'mongodb://localhost:27017/'
 const dataBaseName = 'mydb';
 const jsData = require('../client/jsonData.json');
 const jsScheduler = require('../client/scheduler.json');
@@ -65,7 +65,7 @@ module.exports = {
             res.send(data);
         });
     },
-    Scheduler: function( req, res ) {
+    Scheduler: function (req, res) {
         db.collection('scheduler').find().toArray(function (err, data) {
             if (err) {
                 console.log('Error')
@@ -73,8 +73,7 @@ module.exports = {
                 console.log(data)
             res.send(data);
         });
-    }
-    ,
+    },
 
     getUserById: async (id) => {
         const user = await db.collection('admins').findOne({
@@ -204,7 +203,7 @@ module.exports = {
         })
 
     },
-    history: function(req, res){
+    history: function (req, res) {
         db.collection('historyUsers').find().toArray((function (err, data) {
             if (err) {
                 console.log('Error')
@@ -213,13 +212,81 @@ module.exports = {
             res.send(data);
         }))
     },
-    currentConnected: function(req, res) {
-        db.collection('activeUsers').find().toArray(function(err, data) {
+    currentConnected: function (req, res) {
+        db.collection('activeUsers').find().toArray(function (err, data) {
             if (err) {
                 console.log('Error')
             } else if (data != null)
                 console.log(data)
             res.send(data);
         })
+    },
+    pushScheduler: (req, res) => {
+        const {
+            ID,
+            Adv
+        } = req.body;
+        
+        console.log(Adv, ID, req.body)
+        var Advertising = [];
+        var Tempo = [];
+        var i = 0;
+        var j = 0;
+        for (i; i < Adv.length; i++) {
+            if (Adv[i] != "Non") {
+                Advertising[j] = i;
+                Tempo[j] = Adv[i];
+                j++;
+            }
+        }
+        console.log(Advertising)
+        console.log(Tempo)
+        var res = [{ID, Advertising, Tempo}] 
+        db.collection('scheduler').updateOne({
+            id: ID
+        }, {
+            $set: {
+                tempo : Tempo
+            }
+        }).then((result) => {
+            console.log(result)
+
+        }).catch((error) => {
+            console.log(error)
+        })
+        // db.collection('scheduler').find({
+        //     username: username
+        // }).toArray(async (error, user) => {
+        //     console.log(password, user[0].password)
+        //     if (error) {
+        //         console.log('error')
+        //     }
+        //     if (!user) {
+        //         return res.json({
+        //             status: 'error',
+        //             error: 'Invalid username/password'
+        //         })
+        //     }
+        // //     if (user == null) {
+        // //         return res.status(400).send('Cannot find user')
+        // //     }
+        // //     try {
+        // //         if (await bcryptjs.compare(password, user[0].password)) {
+        // //             res.cookie('token', user[0]._id)
+        // //             res.json({
+        // //                 status: 'ok'
+        // //             })
+        // //         } else {
+        // //             res.json({
+        // //                 error: 'Username or Password are incorrect!'
+        // //             })
+        // //         }
+        // //     } catch (error) {
+        // //         res.status(500).send();
+        // //     }
+
+        // // })
+        // })
     }
+
 }
