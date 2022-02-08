@@ -16,37 +16,24 @@ async function display() {
     $('#TimingSubmit').click( async function() {
         var i = 1
         let Adv = [];
-        var temp;
-
-
-        // function validateForm(num){
-
-        //     var z = num;
-          
-        //     if(!/^[0-9]+$/.test(z)){
-        //       alert("Please only enter numeric characters only for your Age! (Allowed input:0-9)")
-        //       return 0;
-        //     }
-          
-        //   }
         
-        //   if(!validateForm($('#jsonData').val())){
-        //       return;
-        //   }
-
-        console.log($('#jsonData').val());
         var ID = $('#jsonData').val()
+        console.log((ID*0) == 0);
+       
+
         for(i;i< (AdvCount);i++){
+           
             if($('#'+i+'Adv').val()){
                 
-
             Adv[i-1] = $('#'+i+'Adv').val();
             console.log($('#'+i+'Adv').val())
             }else{
                 console.log($('#'+i+'Adv').val())
                 Adv[i-1] = 'Non'
             }
+
         }
+        
         const result = await fetch('/pushScheduler',{
             method:'POST',
             headers:{
@@ -60,9 +47,9 @@ async function display() {
         if(result.error){
             alert(result.error);
         }else if(result.status == 'ok'){
-        console.log("succses!")
+        console.alert("succses!")
         }
-       
+    console.log(result)
       })
 
 }
@@ -77,11 +64,9 @@ function history() {
     var rows = "";
 $.each(jsonHistory, function(){
     rows += "<tr><td > User </td><td>" + this.screen + "</td></tr>";
-    //console.log(this.screen);
 });
 
 $( rows ).appendTo( "#historyUsers" );
-
 
 }
 
@@ -90,7 +75,6 @@ function currentConnection() {
     var rows = "";
     $.each(jsonConnect, function(){
         rows += "<tr><td > User </td><td >" + this.screen + "</td></tr>";
-        //console.log(this.screen);
     });
     
     $( rows ).appendTo( "#cueerntConnection" );
@@ -98,12 +82,9 @@ function currentConnection() {
 
 
 function editMovies() {
-   //var count = 1;
     var rows = "";
-   // $('jsonData').placeholder.location('testing');
     $.each(jsonData, function(){
-         rows += "<tr><td> "+ count + "</td><td> <input type= 'text' class='form-control' id='" + count +  "Adv' placeholder='Example input placeholder'> </td></tr>"
-        //rows += "<tr><td> User </td><td>" + this.screen + "</td></tr>";
+         rows += "<tr><td> "+ count + "</td><td> <input type= 'number' min='0' max='9' class='form-control' id='" + count +  "Adv' placeholder='Example input placeholder'> </td></tr>"
         console.log(rows);
         count++;
     });
@@ -111,9 +92,11 @@ function editMovies() {
     
     $( rows ).appendTo( "#editMovies" );
 
-
-
-
 }
 
 
+//  $('#test').keypress(function(evt) {
+//     if (evt.which == "0".charCodeAt(0) && $(this).val().trim() == "") {
+//     return false;
+//      }
+//   });

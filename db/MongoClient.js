@@ -239,9 +239,11 @@ module.exports = {
                 j++;
             }
         }
+        res.json({status: "OK"});
         console.log(Advertising)
         console.log(Tempo)
         var res = [{ID, Advertising, Tempo}] 
+
         db.collection('scheduler').updateOne({
             id: ID
         }, {
