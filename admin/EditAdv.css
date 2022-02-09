@@ -32,7 +32,7 @@
   } */
   
   .insert {
-    background: #2ecc71;
+    background: #ecf0f1;
   }
   
   .get {
@@ -40,11 +40,11 @@
   }
   
   .update {
-    background: #3498db;
+    background: #ecf0f1;
   }
   
   .delete {
-    background: #e74c3c;
+    background: #ecf0f1;
   }
   
   .input label {

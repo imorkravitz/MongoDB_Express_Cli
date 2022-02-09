@@ -31,31 +31,28 @@ const {
   upDateAdv
 } = require('./db/MongoClient');
 
-
 const cookieParser = require('cookie-parser')
-
 
 app.use(cookieParser());
 
-async function protectedRoute(req,res,next){
+async function protectedRoute(req, res, next) {
   try {
-    console.log('cookie',req.cookies,req.path);
+    console.log('cookie', req.cookies, req.path);
     const protected = ['/admin.html']
-    if(protected.includes(req.path)){
-      if(req.cookies.token){
+    if (protected.includes(req.path)) {
+      if (req.cookies.token) {
         //todo:  find user in db
         const user = await getUserById(req.cookies.token)
-        if(user) return next();
+        if (user) return next();
         res.redirect('/login.html')
 
-      }else {
+      } else {
         res.redirect('/login.html')
       }
-    }else {
+    } else {
       next()
     }
-  } catch (error) {
-  }
+  } catch (error) {}
 }
 
 //Static files
@@ -80,9 +77,9 @@ app.get('/login', (req, res) => {
 app.post('/register', signup)
 app.post('/login', login)
 app.post('/pushScheduler', pushScheduler);
-app.post('/insert',insert)
-app.post('/deleteAdvById',deleteAdvById)
-app.post('/upDateAdv',upDateAdv)
+app.post('/insert', insert)
+app.post('/deleteAdvById', deleteAdvById)
+app.post('/upDateAdv', upDateAdv)
 
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, process.env.pathLogin));
