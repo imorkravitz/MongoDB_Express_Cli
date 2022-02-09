@@ -1,7 +1,7 @@
 const bcryptjs = require('bcryptjs');
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
-const connectionURL = 'mongodb://localhost:27017/'
+const connectionURL = 'mongodb://127.0.0.1:27017/'
 const dataBaseName = 'mydb';
 const jsData = require('../client/jsonData.json');
 const jsScheduler = require('../client/scheduler.json');
@@ -50,7 +50,7 @@ MongoClient.connect(connectionURL, {
             console.error('error to upload scheduler')
         } else {
             console.log('insert scheduler to MongoDB 2')
-           
+
         }
     })
 });
@@ -236,19 +236,85 @@ module.exports = {
         var i = 0;
         var j = 0;
         for (i; i < Adv.length; i++) {
-            
+
             if (Adv[i] != "Non") {
                 Advertising[j] = i;
                 Tempo[j] = Adv[i];
                 j++;
             }
         }
-        var i = 1; 
+        var i = 1;
         console.log(Advertising)
         console.log(Tempo)
 
         db.collection('scheduler').findOneAndReplace(
-            {id: temp},{advertising:Advertising, tempo:Tempo},
-            {returnNewDocument:true}).then(()=>res.json({status: "ok"}))                        
+            { id: temp }, { advertising: Advertising, tempo: Tempo },
+            { returnNewDocument: true }).then(() => res.json({ status: "ok" }))
+    },
+    insert: function (req, res, next) {
+        var movie = {
+            name: req.body.name,
+            texts: req.body.texts,
+            images: req.body.images
+        };
+        db.collection('screens').insertOne(movie, function (err, result) {
+            if (err) {
+                console.log('Error')
+                res.json({
+                    status: 'error'
+                })
+            } else {
+                console.log('Item inserted')
+                res.json({
+                    status: 'ok'
+                })
+            }
+
+        })
+    },
+    deleteAdvById: function (req, res, next) {
+        const { id } = req.body;
+
+        console.log(req.body)
+        console.log(id);
+
+        db.collection('screens').deleteOne({
+            _id: id
+        }).then((result) => {
+            console.log('the Adv (' + id + ') deleted')
+            res.json({
+                status: 'ok'
+            })
+
+        }).catch((error) => {
+            console.log(error)
+            res.json({
+                status: 'error'
+            })
+        })
+
+
+    },
+
+    upDateAdv: function (req, res, next) {
+        const { Id,
+            Title,
+            Text,
+            Image } = req.body;
+
+        console.log(req.body)
+        console.log(Id +'\n'+ Title+'\n' +'\n'+ Text+'\n'+ Image);
+
+        db.collection('screens').findOneAndReplace(
+            { _id: Id },
+            {
+                name: Title,
+                texts: Text,
+                images: Image
+            },
+            { returnNewDocument: true }).then(() => res.json({ status: "ok" }))
+
+
     }
+
 }

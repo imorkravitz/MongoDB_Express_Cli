@@ -25,7 +25,10 @@ const {
   history,
   currentConnected,
   Scheduler,
-  pushScheduler
+  insert,
+  pushScheduler,
+  deleteAdvById,
+  upDateAdv
 } = require('./db/MongoClient');
 
 
@@ -76,8 +79,10 @@ app.get('/login', (req, res) => {
 })
 app.post('/register', signup)
 app.post('/login', login)
-
 app.post('/pushScheduler', pushScheduler);
+app.post('/insert',insert)
+app.post('/deleteAdvById',deleteAdvById)
+app.post('/upDateAdv',upDateAdv)
 
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, process.env.pathLogin));

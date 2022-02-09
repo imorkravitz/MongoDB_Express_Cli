@@ -6,8 +6,6 @@ function GETJSON1() {
         
         },
         success: function (response) {
-            
-            console.log(response)
             return response;
         }
     });
@@ -20,8 +18,6 @@ function GETJSON2() {
         
         },
         success: function (response) {
-            
-            console.log(response)
             return response;
         }
     });
@@ -35,7 +31,6 @@ function GETJSON3() {
         },
         success: function (response) {
             
-            console.log(response)
             return response;
         }
     });
