@@ -80,17 +80,16 @@
     <table class="table table-striped" id="editMovies">
       <thead>
         <h2 style="text-align: center;">Edit Movies</h2>
-        <hr size="3" width="100%" color="blue" style="text-align: center;"> 
+        <hr size="5" width="50%" color="blue" style="margin-left: 25%;"> 
         
         <form class="row g-3">
           <div class="row">
           <div class="col-auto col-sd-6">
-            <!-- <label for="staticEmail2" class="visually-hidden">Choose User Id</label> -->
-            <input type="text" readonly class="form-control-plaintext" style="margin-right:10%;" id="staticEmail2" value="Coouse User Id">
+            <input type="text" readonly class="form-control-plaintext" style="margin-right:10%;" id="staticEmail2" value="User Id">
           </div>
           <div class="col-auto col-sd-3">
             <label for="text" class="visually-hidden"></label>
-            <input type="number" id="test" class="form-control" id="jsonData" placeholder="Choose a number">
+            <input type="number" class="form-control" id="jsonData" placeholder="Choose number (1-3)">
           </div>
         </div>
         </form>
@@ -115,16 +114,22 @@
 <br><br>
 
 <section>
-  <div class="container">
+  <h2 style="text-align: center;">Edit Advertising Information</h2>
+<hr size="5" width="50%" color="blue" style="margin-left: 25%;">  
+
+  <div class="container" >
     <div class="row">
-      <div class="col m-md-4">
-        One of three columns
+      <div class="mb-3">
+        <label for="text" class="form-label">Chosse ID</label>
+        <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="Choose Number (1-3)" style="width: 30%;">
       </div>
-      <div class="col m-md-4">
-        One of three columns
+      <div class="mb-3">
+        <label for="text" class="form-label">Choose Title</label>
+        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter Title" style="width: 50%;">
       </div>
-      <div class="col m-md-4">
-        One of three columns
+      <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Text Free</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Write your description" rows="3" style="width: 50%;"></textarea>
       </div>
     </div>
   </div>

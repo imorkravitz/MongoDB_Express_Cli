@@ -42,6 +42,7 @@ MongoClient.connect(connectionURL, {
             })
         }
     })
+
     db.collection('scheduler').drop();
     console.log('scheduler deleted')
     db.collection('scheduler').insertMany(jsScheduler, (err, data) => {
@@ -49,6 +50,7 @@ MongoClient.connect(connectionURL, {
             console.error('error to upload scheduler')
         } else {
             console.log('insert scheduler to MongoDB 2')
+           
         }
     })
 });
@@ -226,69 +228,27 @@ module.exports = {
             ID,
             Adv
         } = req.body;
-        
-        console.log(Adv, ID, req.body)
+
+        var temp = parseInt(ID)
+
         var Advertising = [];
         var Tempo = [];
         var i = 0;
         var j = 0;
         for (i; i < Adv.length; i++) {
+            
             if (Adv[i] != "Non") {
                 Advertising[j] = i;
                 Tempo[j] = Adv[i];
                 j++;
             }
         }
-        res.json({status: "OK"});
+        var i = 1; 
         console.log(Advertising)
         console.log(Tempo)
-        var res = [{ID, Advertising, Tempo}] 
 
-        db.collection('scheduler').updateOne({
-            id: ID
-        }, {
-            $set: {
-                tempo : Tempo
-            }
-        }).then((result) => {
-            console.log(result)
-
-        }).catch((error) => {
-            console.log(error)
-        })
-        // db.collection('scheduler').find({
-        //     username: username
-        // }).toArray(async (error, user) => {
-        //     console.log(password, user[0].password)
-        //     if (error) {
-        //         console.log('error')
-        //     }
-        //     if (!user) {
-        //         return res.json({
-        //             status: 'error',
-        //             error: 'Invalid username/password'
-        //         })
-        //     }
-        // //     if (user == null) {
-        // //         return res.status(400).send('Cannot find user')
-        // //     }
-        // //     try {
-        // //         if (await bcryptjs.compare(password, user[0].password)) {
-        // //             res.cookie('token', user[0]._id)
-        // //             res.json({
-        // //                 status: 'ok'
-        // //             })
-        // //         } else {
-        // //             res.json({
-        // //                 error: 'Username or Password are incorrect!'
-        // //             })
-        // //         }
-        // //     } catch (error) {
-        // //         res.status(500).send();
-        // //     }
-
-        // // })
-        // })
+        db.collection('scheduler').findOneAndReplace(
+            {id: temp},{advertising:Advertising, tempo:Tempo},
+            {returnNewDocument:true}).then(()=>res.json({status: "ok"}))                        
     }
-
 }

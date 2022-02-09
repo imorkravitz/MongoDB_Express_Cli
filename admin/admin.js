@@ -18,9 +18,6 @@ async function display() {
         let Adv = [];
         
         var ID = $('#jsonData').val()
-        console.log((ID*0) == 0);
-       
-
         for(i;i< (AdvCount);i++){
            
             if($('#'+i+'Adv').val()){
@@ -31,7 +28,6 @@ async function display() {
                 console.log($('#'+i+'Adv').val())
                 Adv[i-1] = 'Non'
             }
-
         }
         
         const result = await fetch('/pushScheduler',{
@@ -47,7 +43,7 @@ async function display() {
         if(result.error){
             alert(result.error);
         }else if(result.status == 'ok'){
-        console.alert("succses!")
+        alert("succses!")
         }
     console.log(result)
       })
@@ -84,7 +80,7 @@ function currentConnection() {
 function editMovies() {
     var rows = "";
     $.each(jsonData, function(){
-         rows += "<tr><td> "+ count + "</td><td> <input type= 'number' min='0' max='9' class='form-control' id='" + count +  "Adv' placeholder='Example input placeholder'> </td></tr>"
+         rows += "<tr><td> "+ count + "</td><td> <input type= 'number' min='0' max='9' class='form-control' id='" + count +  "Adv' placeholder='Enter Time in Miliseconds'> </td></tr>"
         console.log(rows);
         count++;
     });
@@ -94,9 +90,3 @@ function editMovies() {
 
 }
 
-
-//  $('#test').keypress(function(evt) {
-//     if (evt.which == "0".charCodeAt(0) && $(this).val().trim() == "") {
-//     return false;
-//      }
-//   });
