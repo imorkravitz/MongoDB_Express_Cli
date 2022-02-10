@@ -201,9 +201,7 @@ module.exports = {
             } catch (error) {
                 res.status(500).send();
             }
-
         })
-
     },
     history: function (req, res) {
         db.collection('historyUsers').find().toArray((function (err, data) {
@@ -248,7 +246,7 @@ module.exports = {
         console.log(Tempo)
 
         db.collection('scheduler').findOneAndReplace(
-            { id: temp }, { advertising: Advertising, tempo: Tempo },
+            { id: temp }, {id: temp, advertising: Advertising, tempo: Tempo },
             { returnNewDocument: true }).then(() => res.json({ status: "ok" }))
     },
     insert: function (req, res, next) {
@@ -292,29 +290,22 @@ module.exports = {
                 status: 'error'
             })
         })
-
-
-    },
-
-    upDateAdv: function (req, res, next) {
+    },upDateAdv: function (req, res, next) {
         const { Id,
             Title,
-            Text,
-            Image } = req.body;
+            Text=[],
+            Image=[] } = req.body;
 
-        console.log(req.body)
-        console.log(Id +'\n'+ Title+'\n' +'\n'+ Text+'\n'+ Image);
+            console.log(req.body)
+            console.log(Id +'\n'+ Title+'\n'+ Text+'\n'+ Image);
 
-        db.collection('screens').findOneAndReplace(
+            db.collection('screens').findOneAndReplace(
             { _id: Id },
             {
                 name: Title,
                 texts: Text,
                 images: Image
             },
-            { returnNewDocument: true }).then(() => res.json({ status: "ok" }))
-
-
+        { returnNewDocument: true }).then(() => res.json({ status: "ok" }))
     }
-
 }

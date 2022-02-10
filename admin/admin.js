@@ -14,7 +14,7 @@ async function display() {
     AdvCount = getAdvCount()
     editAdv()
 
-    //===========================EditScheduler=========================================
+//===========================EditScheduler=========================================
     $('#TimingSubmit').click(async function () {
         var i = 1
         let Adv = [];
@@ -49,8 +49,7 @@ async function display() {
         }
         console.log(result)
     })
-
-    //===========================InsertAdv===========================================
+//===========================InsertAdv===========================================
     const form = document.getElementById("insert");
     form.addEventListener('submit', insert)
     async function insert(event) {
@@ -59,7 +58,6 @@ async function display() {
         const name = document.getElementById('name').value
         const texts = document.getElementById('texts').value
         const url = document.getElementById('url').value
-        //console.log(name,texts,url)
         const result = await fetch('/insert', {
             method: 'POST',
             headers: {
@@ -74,12 +72,10 @@ async function display() {
         if (result.error) {
             alert(result.error);
         } else if (result.status == 'ok') {
-            //window.location.replace('/update.html')
             console.log('ok');
         }
-        // console.log(result)
     }
-    //===========================UpdateAdv=========================================
+//===========================UpdateAdv=========================================
 
     $('#upDate').click(async function () {
         
@@ -107,10 +103,7 @@ async function display() {
         }
         console.log(result)
     })
-
-
-
-    //===========================deleteAdv=========================================
+//===========================deleteAdv=========================================
 
     $('#deleteAdv').click(async function () {
 
@@ -134,9 +127,6 @@ async function display() {
         console.log(result)
     })
 
-
-
-
 }
 
 $(document).ready(function () {
@@ -150,9 +140,7 @@ function history() {
     $.each(jsonHistory, function () {
         rows += "<tr><td > User </td><td>" + this.screen + "</td></tr>";
     });
-
     $(rows).appendTo("#historyUsers");
-
 }
 
 function currentConnection() {
@@ -172,9 +160,7 @@ function editMovies() {
         rows += "<tr><td> " + count + "</td><td> <input type= 'number' min='0' max='9' class='form-control' id='" + count + "Adv' placeholder='Enter Time in Miliseconds'> </td></tr>"
         count++;
     });
-
     $(rows).appendTo("#editMovies");
-
 }
 
 function editAdv() {
@@ -192,12 +178,9 @@ function editAdv() {
         rows += "<div><b><u></u>Text:</u></b></div>"
         rows += "<p>" + JSON.stringify(jsonData[i].texts) + "</p>"
         rows += "<div><b><u></u>Image:</u></b></div>"
-        rows += "<p>test</p>"
+        // rows += "<p>"+ jsonData[i].images +"</p>"
         rows += "</article>"
-
         i++;
     })
-
-
     $(rows).appendTo("#items");
 }

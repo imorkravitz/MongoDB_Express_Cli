@@ -29,7 +29,7 @@ Itai Levy, 311402754 -->
         var socket = io('http://localhost:8080/');
 
         socket.on('connect', function () {
-            // call the server-side function 'adduser' and send one parameter
+        // call the server-side function 'adduser' and send one parameter
             socket.emit('adduser', getScreen());
         });
     </script>
@@ -39,7 +39,6 @@ Itai Levy, 311402754 -->
 
 <body>  
     <nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav-edit">
-        <!-- <a class="navbar-brand"><h1>Movies</h1></a> -->
         <a class="navbar-brand" href="/screen=1" >Advertisements<span class="sr-only"> (Movies)</span></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>

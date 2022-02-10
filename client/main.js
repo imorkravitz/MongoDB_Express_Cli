@@ -26,7 +26,6 @@ async function display(id) {
     json = await GETJSON(id);
     scheduler = await getSchedulerFromMongo();
     console.log(json);
-    //scheduler = getScheduler();
     loadTemplates();
 }
 
@@ -38,7 +37,7 @@ $(document).ready(function () {
 
 function loadTemplates() {
 
-    var adaptorId = id % 3;
+    var adaptorId = (id-1) % 3;
     var temp = scheduler[adaptorId];
     var num = i % Object.keys(temp.advertising).length;
     var post = json[temp.advertising[num]];
