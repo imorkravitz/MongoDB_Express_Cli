@@ -128,12 +128,18 @@ Itai Levy, 311402754 -->
   <br><br>
 
 
-  <section>
+  <!-- <div class="form-floating">
+    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+    <label for="floatingTextarea">Comments</label>
+  </div> -->
+
+
+  <!-- <section class="row"> -->
 
     <h2 style="text-align: center;">Edit Advertising Information</h2>
     <hr size="5" width="50%" color="blue" style="margin-left: 25%;">
-    
-    <section class="insert">
+<container class="row">
+    <section class="insert col-md-4">
       <h3 style="text-align: center;">Insert Data</h3>
       <form id="insert">
         <div class="input">
@@ -145,13 +151,13 @@ Itai Levy, 311402754 -->
           <input type="text" id="texts" name="texts">
         </div>
         <div class="input">
-          <label for="url">Image Url</label>
-          <input type="text" id="url" name="url">
+          <label for="images">Image Url</label>
+          <input type="text" id="images" name="images">
         </div>
-        <button type="submit" class="btn btn-success" style="margin-left: 1%;">INSERT</button>
+        <button type="submit" class="btn btn-success" style="margin-left: 3%;">INSERT</button>
       </form>
     </section>
-    <hr size="5" width="100%" color="blue">
+    <!-- <hr size="5" width="100%" color="blue">
     <br>
     <section class="get">
       <form id="get">
@@ -160,10 +166,8 @@ Itai Levy, 311402754 -->
         <div id="items">
         </div>
       </form>
-    </section>
-    <hr size="5" width="100%" color="blue">
-    <br>
-    <section class="update">
+    </section> -->
+    <section class="update col-md-4">
       <h3 style="text-align: center;">Update Data</h3>
       <form>
         <div class="input">
@@ -182,22 +186,25 @@ Itai Levy, 311402754 -->
           <label for="author">Image</label>
           <input type="text" id="imageUpDate" name="author">
         </div>
-        <button type="submit" class="btn btn-success" style="margin-left: 1%;" id="upDate">UPDATE</button>
+        <button type="submit" class="btn btn-success" style="margin-left: 3%;" id="upDate">UPDATE</button>
       </form>
     </section>
+
   </section>
-  <hr size="5" width="100%" color="blue">
-  <br>
-  <section class="delete">
+  
+  <section class="delete col-md-4">
     <h3 style="text-align: center;">Delete Data</h3>
     <form>
       <div class="input">
         <label for="id">ID</label>
         <input type="text" id="inupAdv" name="id">
       </div>
-      <button type="button" class="btn btn-success" style="margin-left: 1%;" id="deleteAdv">DELETE</button>
+      <button type="button" class="btn btn-success" style="margin-left: 3%;" id="deleteAdv">DELETE</button>
     </form>
   </section>
+</container>
+</div>
+
   </section>
 </body>
 

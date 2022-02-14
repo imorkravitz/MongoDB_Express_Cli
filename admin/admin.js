@@ -57,7 +57,7 @@ async function display() {
         event.preventDefault()
         const name = document.getElementById('name').value
         const texts = document.getElementById('texts').value
-        const url = document.getElementById('url').value
+        const images = document.getElementById('images').value
         const result = await fetch('/insert', {
             method: 'POST',
             headers: {
@@ -66,13 +66,13 @@ async function display() {
             body: JSON.stringify({
                 name,
                 texts,
-                url
+                images
             })
         }).then((res) => res.json())
         if (result.error) {
             alert(result.error);
         } else if (result.status == 'ok') {
-            console.log('ok');
+            alert('An advertisement was placed on the site');
         }
     }
 //===========================UpdateAdv=========================================

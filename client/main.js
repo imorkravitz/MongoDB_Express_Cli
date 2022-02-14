@@ -4,19 +4,19 @@ function GETJSON(ScreenId) {
         type: "GET",
         url: window.location.origin + "/post",
         data: {
-            
+
         },
         success: function (response) {
             return response;
         }
     });
 }
+
 function getSchedulerFromMongo(ScreenId) {
     return $.ajax({
         type: "GET",
         url: window.location.origin + "/post1",
-        data: {
-        },
+        data: {},
         success: function (response) {
             return response;
         }
@@ -37,23 +37,33 @@ $(document).ready(function () {
 
 function loadTemplates() {
 
-    var adaptorId = (id-1) % 3;
+    var adaptorId = (id - 1) % 3;
     var temp = scheduler[adaptorId];
     var num = i % Object.keys(temp.advertising).length;
     var post = json[temp.advertising[num]];
     console.log("Iteration: " + num);
     console.log("advertisement: " + temp.advertising[num]); {
-        $('#main_page').load(post.template, function () {
-            $('#name').text(post.name);
+        //$('#main_page').load(post.template, function ()
+        if (Object.keys(post.texts)[0] == 'line0') {
+            $('#main_page').load(post.template, function () {
+                $('#name').text(post.name);
 
-            for (var j = 0; j < Object.keys(post.texts).length; j++) { // the text of the Advertising
-                $('#line' + j).text(post.texts['line' + j]);
-            }
+                for (var j = 0; j < Object.keys(post.texts).length; j++) { // the text of the Advertising
+                    $('#line' + j).text(post.texts['line' + j]);
+                }
 
-            for (var k = 0; k < Object.keys(post.images).length; k++) { // images of the Advertising
-                $('#img' + k).attr('src', post.images['img' + k]);
-            }
-        });
+                for (var k = 0; k < Object.keys(post.images).length; k++) { // images of the Advertising
+                    $('#img' + k).attr('src', post.images['img' + k]);
+                }
+
+            });
+        } else {
+            $('#main_page').load("../client/templates/templateB.html", function () {
+                $('#line0').text(post.texts);
+                $('#imageFrame').attr("src", post.images);
+            });
+
+        }
     }
     setTimeout(loadTemplates, temp.tempo[num]);
     i++;

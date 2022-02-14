@@ -22,26 +22,26 @@ MongoClient.connect(connectionURL, {
 
     let flag = 0;
     let flag1 = 0
-    db.collection('screens').insertMany(jsData, (err, data) => {
-        if (err) {
-            flag = 1;
+    // db.collection('screens').insertMany(jsData, (err, data) => {
+    //     if (err) {
+    //         flag = 1;
 
-            db.collection('screens').drop();
-            console.log('upload data...')
-        } else {
-            console.log('insert data to MongoDB 1')
-        }
+    //         db.collection('screens').drop();
+    //         console.log('upload data...')
+    //     } else {
+    //         console.log('insert data to MongoDB 1')
+    //     }
 
-        if (flag) {
-            db.collection('screens').insertMany(jsData, (err, data) => {
-                if (err) {
-                    console.error('error to upload data')
-                } else {
-                    console.log('insert data to MongoDB 2')
-                }
-            })
-        }
-    })
+    //     if (flag) {
+    //         db.collection('screens').insertMany(jsData, (err, data) => {
+    //             if (err) {
+    //                 console.error('error to upload data')
+    //             } else {
+    //                 console.log('insert data to MongoDB 2')
+    //             }
+    //         })
+    //     }
+    // })
 
     db.collection('scheduler').drop();
     console.log('scheduler deleted')
@@ -255,6 +255,7 @@ module.exports = {
             texts: req.body.texts,
             images: req.body.images
         };
+        
         db.collection('screens').insertOne(movie, function (err, result) {
             if (err) {
                 console.log('Error')
@@ -267,6 +268,7 @@ module.exports = {
                     status: 'ok'
                 })
             }
+
 
         })
     },

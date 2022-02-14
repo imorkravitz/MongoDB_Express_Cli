@@ -37,7 +37,7 @@ app.use(cookieParser());
 
 async function protectedRoute(req, res, next) {
   try {
-    console.log('cookie', req.cookies, req.path);
+//console.log('cookie', req.cookies, req.path);
     const protected = ['/admin.html']
     if (protected.includes(req.path)) {
       if (req.cookies.token) {
