@@ -96,12 +96,11 @@ Itai Levy, 311402754 -->
           <hr size="5" width="50%" color="blue" style="margin-left: 25%;">
 
           <form class="row g-3">
-            <div class="row">
-              <div class="col-auto col-sd-6">
-                <input type="text" readonly class="form-control-plaintext" style="margin-right:10%;" id="staticEmail2"
-                  value="User Id">
+            <div class="row text-align">
+              <div class="col-auto col-sd-2">
+                <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="User Id">
               </div>
-              <div class="col-auto col-sd-3">
+              <div class="col-auto col-sd-2">
                 <label for="text" class="visually-hidden"></label>
                 <input type="number" class="form-control" id="jsonData" placeholder="Choose number (1-3)">
               </div>
@@ -127,13 +126,6 @@ Itai Levy, 311402754 -->
   <hr size="5" width="100%" color="blue">
   <br><br>
 
-
-  <!-- <div class="form-floating">
-    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-    <label for="floatingTextarea">Comments</label>
-  </div> -->
-
-
   <!-- <section class="row"> -->
 
     <h2 style="text-align: center;">Edit Advertising Information</h2>
@@ -154,19 +146,10 @@ Itai Levy, 311402754 -->
           <label for="images">Image Url</label>
           <input type="text" id="images" name="images">
         </div>
-        <button type="submit" class="btn btn-success" style="margin-left: 3%;">INSERT</button>
+        <button type="submit" class="btn btn-success" style="margin-left: 1%;">INSERT</button>
       </form>
     </section>
-    <!-- <hr size="5" width="100%" color="blue">
     <br>
-    <section class="get">
-      <form id="get">
-        <h3 style="text-align: center;">Get Data</h3>
-        <button type="button" class="btn btn-success" style="margin-left: 1%;" id=Get-submit>LOAD DATA</button>
-        <div id="items">
-        </div>
-      </form>
-    </section> -->
     <section class="update col-md-4">
       <h3 style="text-align: center;">Update Data</h3>
       <form>
@@ -189,8 +172,6 @@ Itai Levy, 311402754 -->
         <button type="submit" class="btn btn-success" style="margin-left: 3%;" id="upDate">UPDATE</button>
       </form>
     </section>
-
-  </section>
   
   <section class="delete col-md-4">
     <h3 style="text-align: center;">Delete Data</h3>
@@ -201,8 +182,19 @@ Itai Levy, 311402754 -->
       </div>
       <button type="button" class="btn btn-success" style="margin-left: 3%;" id="deleteAdv">DELETE</button>
     </form>
+    <br>
   </section>
 </container>
+  <hr size="5" width="100%" color="blue" ><br>
+  <section class="get">
+    <form id="get">
+      <h3 style="text-align: center;">Get Data</h3>
+      <div id="items">
+      </div>
+    </form>
+  </section> 
+
+
 </div>
 
   </section>
