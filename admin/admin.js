@@ -56,7 +56,7 @@ async function display() {
 
         event.preventDefault()
         const name = document.getElementById('name').value
-        const texts = document.getElementById('texts').value
+        const texts = document.getElementById('Textarea').value
         const images = document.getElementById('images').value
         const result = await fetch('/insert', {
             method: 'POST',
@@ -73,6 +73,7 @@ async function display() {
             alert(result.error);
         } else if (result.status == 'ok') {
             alert('An advertisement was placed on the site');
+            window.location.replace('/admin.html')
         }
     }
 //===========================UpdateAdv=========================================
@@ -81,9 +82,12 @@ async function display() {
         
         var Id = $('#idUpDate').val();
         var Title = $('#titleUpDate').val();
-        var Text = $('#textUpData').val();
+        var Text = $('#Textarea1').val();
         var Image = $('#imageUpDate').val();
-
+        console.log($('#Textarea1').val()+'1')
+        //console.log(Text[1]+'2')
+        console.log(Text+'3')
+        console.log(Text[1]+'4')
         const result = await fetch('/upDateAdv', {
             method: 'POST',
             headers: {
@@ -123,6 +127,7 @@ async function display() {
             alert(result.error);
         } else if (result.status == 'ok') {
             alert("succses!\n 'The Adv (" + id + ") deleted ")
+            window.location.replace('/admin.html')
         }
         console.log(result)
     })
@@ -184,3 +189,6 @@ function editAdv() {
     })
     $(rows).appendTo("#items");
 }
+
+
+

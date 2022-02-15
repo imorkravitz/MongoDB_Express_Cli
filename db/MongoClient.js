@@ -1,10 +1,11 @@
 const bcryptjs = require('bcryptjs');
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
-const connectionURL = 'mongodb://localhost:27017/'
+const connectionURL = 'mongodb://127.0.0.1:27017/'
 const dataBaseName = 'mydb';
 const jsData = require('../client/jsonData.json');
 const jsScheduler = require('../client/scheduler.json');
+const env = require('dotenv');
 
 var db;
 
@@ -20,8 +21,8 @@ MongoClient.connect(connectionURL, {
     db = client.db(dataBaseName)
 
 
-    let flag = 0;
-    let flag1 = 0
+    // let flag = 0;
+    // let flag1 = 0
     // db.collection('screens').insertMany(jsData, (err, data) => {
     //     if (err) {
     //         flag = 1;
@@ -119,8 +120,16 @@ module.exports = {
         console.log(req.body)
         const {
             username,
-            password: plainTextPassword
+            password: plainTextPassword,
+            PinCode
         } = req.body;
+        if(process.env.PinCode!=PinCode){
+            return res.json({
+                status: 'error',
+                error: 'Invalid Pin Code'
+            })
+        }
+    
         if (!username || typeof username !== 'string') {
             return res.json({
                 status: 'error',
@@ -158,8 +167,9 @@ module.exports = {
                         username: username,
                         password: hash
                     })
-                    res.json({
-                        message: 'Admin created!'
+                    return res.json({
+                        status: 'ok',
+                        message: 'Admin Created!'
                     })
                 }
             })
@@ -256,6 +266,8 @@ module.exports = {
             images: req.body.images
         };
         
+        movie.texts = movie.texts.split('\n');
+
         db.collection('screens').insertOne(movie, function (err, result) {
             if (err) {
                 console.log('Error')
@@ -268,8 +280,6 @@ module.exports = {
                     status: 'ok'
                 })
             }
-
-
         })
     },
     deleteAdvById: function (req, res, next) {
@@ -297,15 +307,14 @@ module.exports = {
             Title,
             Text=[],
             Image=[] } = req.body;
-
-            console.log(req.body)
-            console.log(Id +'\n'+ Title+'\n'+ Text+'\n'+ Image);
+            
+            var TextArr = Text.split('\n');
 
             db.collection('screens').findOneAndReplace(
             { _id: Id },
             {
                 name: Title,
-                texts: Text,
+                texts: TextArr,
                 images: Image
             },
         { returnNewDocument: true }).then(() => res.json({ status: "ok" }))

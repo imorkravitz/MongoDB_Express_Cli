@@ -44,7 +44,7 @@ function loadTemplates() {
     console.log("Iteration: " + num);
     console.log("advertisement: " + temp.advertising[num]); {
         //$('#main_page').load(post.template, function ()
-        if (Object.keys(post.texts)[0] == 'line0') {
+        if (Object.keys(post.texts)[0] == 'line0'||Object.keys(post.images)[0]=='img0'){
             $('#main_page').load(post.template, function () {
                 $('#name').text(post.name);
 
@@ -59,7 +59,13 @@ function loadTemplates() {
             });
         } else {
             $('#main_page').load("../client/templates/templateB.html", function () {
-                $('#line0').text(post.texts);
+                $('#name').text(post.name);
+                var i = 0;
+                for(i;i<post.texts.length;i++){
+                    $('#line'+i).text(post.texts[i]);
+                }
+                // $('#line0').text(post.texts[0]);
+                // $('#line1').text(post.texts[1]);
                 $('#imageFrame').attr("src", post.images);
             });
 

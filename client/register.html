@@ -25,7 +25,7 @@
               <a class="nav-link" href="/register"> Register</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/login">Login</a>
+             <a class="nav-link" href="/login">Login</a>
             </li>
           </ul>
         </div>
@@ -43,6 +43,10 @@
             <label for="exampleInputPassword1"  class="form-label">Password</label>
             <input type="password" class="form-control" width="300" id="userPassword">
           </div>
+          <div class="col-3">
+            <label for="exampleInputPassword1"  class="form-label">Pin Code</label>
+            <input type="password" class="form-control" width="300" id="Pin_Code">
+          </div>
             <div class="col-12">
           <button type="submit" class="btn btn-dark " id="submitBtn">Submit</button>
           <p><a href="http://localhost:8080/admin" id="path"></a></p>
@@ -59,6 +63,7 @@
             event.preventDefault()
             const username=document.getElementById('userName').value
             const password=document.getElementById('userPassword').value
+            const PinCode=document.getElementById('Pin_Code').value
             
 
             const result = await fetch('/register',{
@@ -68,11 +73,15 @@
                 },
                 body:JSON.stringify({
                     username,
-                    password
+                    password,
+                    PinCode
                 })
 
             }).then((res)=>res.json())
-            if(result.error){
+            if(result.status == 'ok'){
+              alert(result.message)
+            }
+            else if(result.error){
                 alert(result.error);
             }
             console.log(result)
