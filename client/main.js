@@ -64,8 +64,6 @@ function loadTemplates() {
                 for(i;i<post.texts.length;i++){
                     $('#line'+i).text(post.texts[i]);
                 }
-                // $('#line0').text(post.texts[0]);
-                // $('#line1').text(post.texts[1]);
                 $('#imageFrame').attr("src", post.images);
             });
 

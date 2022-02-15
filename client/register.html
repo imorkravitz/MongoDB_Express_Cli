@@ -40,12 +40,12 @@
             <div id="emailHelp" class="form-text"></div>
           </div>
           <div class="col-2">
-            <label for="exampleInputPassword1"  class="form-label">Password</label>
+            <label for="exampleInputPassword1" class="form-label">Password</label>
             <input type="password" class="form-control" width="300" id="userPassword">
           </div>
-          <div class="col-3">
-            <label for="exampleInputPassword1"  class="form-label">Pin Code</label>
-            <input type="password" class="form-control" width="300" id="Pin_Code">
+          <div class="col-sm-1">
+            <label for="exampleInputPassword1" class="form-label">Pin Code</label>
+            <input type="password" class="form-control" maxlength="4" size="4" id="Pin_Code">
           </div>
             <div class="col-12">
           <button type="submit" class="btn btn-dark " id="submitBtn">Submit</button>
@@ -80,7 +80,7 @@
             }).then((res)=>res.json())
             if(result.status == 'ok'){
               alert(result.message)
-            }
+              window.location.replace('./login')            }
             else if(result.error){
                 alert(result.error);
             }

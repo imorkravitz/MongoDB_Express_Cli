@@ -19,7 +19,7 @@ http.listen(port, () => console.log(`server is listening on port ${port}`));
 const MongoClient = require('./db/MongoClient');
 const {
   main,
-  signup,
+  register,
   login,
   getUserById,
   history,
@@ -74,7 +74,7 @@ app.get('/', (req, res) => {
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, process.env.pathLogin));
 })
-app.post('/register', signup)
+app.post('/register', register)
 app.post('/login', login)
 app.post('/pushScheduler', pushScheduler);
 app.post('/insert', insert)

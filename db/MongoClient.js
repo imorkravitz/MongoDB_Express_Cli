@@ -1,7 +1,7 @@
 const bcryptjs = require('bcryptjs');
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
-const connectionURL = 'mongodb://127.0.0.1:27017/'
+const connectionURL = 'mongodb://localhost:27017/'
 const dataBaseName = 'mydb';
 const jsData = require('../client/jsonData.json');
 const jsScheduler = require('../client/scheduler.json');
@@ -21,28 +21,28 @@ MongoClient.connect(connectionURL, {
     db = client.db(dataBaseName)
 
 
-    // let flag = 0;
-    // let flag1 = 0
-    // db.collection('screens').insertMany(jsData, (err, data) => {
-    //     if (err) {
-    //         flag = 1;
+    let flag = 0;
+    let flag1 = 0
+    db.collection('screens').insertMany(jsData, (err, data) => {
+        if (err) {
+            flag = 1;
 
-    //         db.collection('screens').drop();
-    //         console.log('upload data...')
-    //     } else {
-    //         console.log('insert data to MongoDB 1')
-    //     }
+            db.collection('screens').drop();
+            console.log('upload data...')
+        } else {
+            console.log('insert data to MongoDB 1')
+        }
 
-    //     if (flag) {
-    //         db.collection('screens').insertMany(jsData, (err, data) => {
-    //             if (err) {
-    //                 console.error('error to upload data')
-    //             } else {
-    //                 console.log('insert data to MongoDB 2')
-    //             }
-    //         })
-    //     }
-    // })
+        if (flag) {
+            db.collection('screens').insertMany(jsData, (err, data) => {
+                if (err) {
+                    console.error('error to upload data')
+                } else {
+                    console.log('insert data to MongoDB 2')
+                }
+            })
+        }
+    })
 
     db.collection('scheduler').drop();
     console.log('scheduler deleted')
@@ -116,7 +116,7 @@ module.exports = {
             screen: screenNum
         })
     },
-    signup: (req, res) => {
+    register: (req, res) => {
         console.log(req.body)
         const {
             username,
